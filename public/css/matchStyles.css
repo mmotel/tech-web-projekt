@@ -1,0 +1,32 @@
+div.score , div.scoreTeamNames {
+	width: 300px;
+	padding: 0px 5px;
+	margin: 0px auto;
+	/*background: red;*/
+	display: table;
+	float: both;
+}
+
+span.teamScore {
+	width: 130px;
+	display: table-cell;
+	font-size: 38pt;
+	font-weight: bold;
+	text-align: center;
+}
+
+span.scoreSeparator{
+	width: 40px;
+	display: table-cell;
+	font-size: 32pt;
+	font-weight: bold;
+	text-align: center;
+}
+
+span.teamScoreName {
+	width: 150px;
+	display: table-cell;
+	font-size: 14pt;
+	font-style: italic;
+	text-align: center;
+}

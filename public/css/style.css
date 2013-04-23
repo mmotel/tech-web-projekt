@@ -1,0 +1,30 @@
+* {
+	font-size: 11pt;
+	font-family: Verdana, Arial;
+}
+
+body {
+	background-color: #eeeeee;
+	padding: 50px;
+}
+
+div#content {
+	padding: 50px auto;
+	width: 200px;
+	overflow: auto;
+}
+
+span#count {
+	padding: 5px 5%;
+	width: 40%;
+	font-weight: bold;
+}
+
+span#counter {
+	padding: 5px 5%;
+	width: 40%;
+	font-weight: bold;
+	background: green;
+	border-radius: 5px;
+}
+

@@ -1,0 +1,107 @@
+* {
+	font-family: Verdana, Arial;
+	font-size: 11pt;
+}
+
+body {
+	padding: 5px;
+	margin: 0px;
+}
+
+div.wraper {
+	width: 1200px;
+	/*overflow: auto;*/
+	margin: 0px auto;
+}
+
+div.matchData {
+	width: 34%;
+	position: relative;
+	left: 33%;
+	float: left;
+	min-height: 200px;
+}
+
+div.homeTeam {
+	width: 32%;
+	position: relative;
+	left: -34%;
+	float: left;
+	border: 1px solid #ccc;
+	border-radius: 3px;	
+	min-height: 200px;
+	background: #eee;
+}
+
+div.awayTeam {
+	width: 32%;
+	float: right;
+	border: 1px solid #ccc;
+	border-radius: 3px;	
+	min-height: 200px;
+	background: #eee;
+}
+
+@media print, screen and (max-width: 1199px){
+
+	div.wraper {
+		width: 100%;
+	}
+	
+	div.matchData{
+		width: 100%;
+		float: both;
+		position: relative;
+		left: 0;
+	}
+	
+	div.homeTeam {
+		width: 49.5%;
+		position: relative;
+		left: 0;
+	}
+	
+	div.awayTeam {
+		width: 49.5%;
+		/*margin-left: 1%;*/
+	}
+}
+
+@media print, screen and (max-width: 679px){
+	div.homeTeam {
+		width: 100%;
+		float: both;
+	}
+	
+	div.awayTeam {
+		margin-top: 5px;
+		width: 100%;
+		float: both;
+		/*margin: 0px;*/
+	}
+
+	div.substitutions {
+		display: none;
+	}
+}
+
+@media print, screen and (max-width: 349px){
+
+	div.wrapper {
+		width: 340px;
+	}
+	
+	div.matchData{
+		width: 340px;
+	}
+
+	div.homeTeam {
+		width: 340px;
+		float: both;
+	}
+	
+	div.awayTeam {
+		width: 340px;
+		float: both;
+	}
+}

@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Easy livescore</title>
+		<link rel="stylesheet" href="css/styles.css">
+		<link rel="stylesheet" href="css/teamStyles.css">
+		<link rel="stylesheet" href="css/matchStyles.css">
+		<script src='/js/jquery-1.9.1.js'></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src='/js/myDrawGUI.js'></script>
+		<script src='/js/skrypt.js'></script>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	</head>
+	<body>
+	
+		<div class="wraper">
+	
+			<div class="matchData">
+				<div class="scoreTeamNames" id="scoreTeamNames">
+					<span class="teamScoreName" id="homeTeamName">home</span>
+					<span class="teamScoreName" id="awayTeamName">away</span>
+				</div>
+				<div class="score" id="score">
+					<span class="teamScore" id="homeTeamScore">0</span>
+					<span class="scoreSeparator">:</span>
+					<span class="teamScore" id="awayTeamScore">0</span>
+				</div>
+				<div class="matchEvents" id="matchEvents"> 
+					<!-- todo -->
+				</div>
+			</div>
+			<div class="homeTeam">
+				<div class="teamName">Home team</div>
+				<div id="homeFirstTeam" class="firstTeam">
+					<!--<div class="teamMember" id="home01">
+						<span class="playerNum">32</span>
+						<span class="playerName">Christian Abiatti</span>
+						<span class="plus">0</span>
+						<span class="minus">0</span>
+					</div>-->
+				</div>
+				<div id="homeSubstitutions" class="substitutions">
+					<p class="subTitle">Ławka rezerwowych</p>
+					<!--<div class="teamMember" id="home12">
+						<span class="playerNum">59</span>
+						<span class="playerName">Gabriel</span>
+						<span class="plus">0</span>
+						<span class="minus">0</span>
+					</div>-->
+				</div>
+			</div>
+			<div class="awayTeam">
+				<div class="teamName">Away team</div>
+				<div id="awayFirstTeam" class="firstTeam">
+				</div>
+				<div id="awaySubstitutions" class="substitutions">
+					<p class="subTitle">Ławka rezerwowych</p>
+				</div>
+			</div>
+			
+		</div>
+	
+	</body>
+</html>

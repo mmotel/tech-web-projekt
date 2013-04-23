@@ -1,0 +1,84 @@
+div.firstTeam, div.substitutions {
+	overflow: auto;
+}
+
+div.teamName {
+	padding: 5px 5px 5px 10px;
+	/*background: #0DB2B6;*/
+	margin-bottom: 2px;
+	font-size: 18pt;
+	font-weight: bold;
+	color: #424242;
+	float: both;
+	border-radius: 3px;
+}
+
+div.teamMember {
+	float: both;
+	/*margin-bottom: 1px;*/
+	background: #fff;
+	padding: 2px 0px;
+	width: 100%;
+	display: table;
+	overflow: auto;
+	border-top: 1px solid #ccc;
+	}
+
+span.playerNum {
+	width: 6%;
+	padding: 0px 1% 0px 0px;
+	text-align: right;
+	font-size: 10pt;
+	/*background: #E9E9E9;*/
+	display: table-cell;
+}
+
+span.playerName {
+	width: 40%;
+	padding: 0px 1%;
+	text-align: left;
+	/*background: #E9E9E9;*/
+	text-align: left;
+	display: table-cell;
+}
+
+span.countButton {
+	width: 23%;
+	display: table-cell;
+	padding: 1%;
+	/*background: #E9E9E9;*/
+}
+
+span.minus {
+	/*width: 99%;*/
+	padding: 2px 0%;
+	background: #fff;
+	border: 1px solid #FF0303;
+	outline: 2px solid #fff;
+	font-size: 10pt;
+	color: #FF0303;
+	display: block;
+	text-align: center;
+}
+
+span.plus {
+	/*width: 99%;*/
+	padding: 2px 0%;
+	font-size: 10pt;
+	background: #fff;
+	border: 1px solid #008E09;
+	outline: 2px solid #fff;
+	color: #008E09;
+	display: block;
+	text-align: center;
+}
+
+p.subTitle {
+	margin: 1px 0px;
+	padding: 5px 5px 5px 15px;
+	font-style: italic;
+	font-size: 10pt;
+	color: #424242;
+	border-top: 1px solid #ccc;
+	/*border-radius: 2px;*/
+}
