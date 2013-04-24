@@ -22,12 +22,12 @@ $(function () {
 	socket.on('newMinusCount', function (data) {
         var id = data.id < 10 ? '0' + data.id : data.id;
 		var selector = data.team + id;
-		$('#' + selector + ' .minus').text(data.count);
+		$('#' + selector + ' .minusCount').text(data.count);
     });
 	
 	socket.on('newPlusCount', function (data) {
         var id = data.id < 10 ? '0' + data.id : data.id;
 		var selector = data.team + id;
-		$('#' + selector + ' .plus').text(data.count);
+		$('#' + selector + '  .plusCount').text(data.count);
     });
 });

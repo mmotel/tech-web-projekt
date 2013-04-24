@@ -8,100 +8,33 @@ body {
 	margin: 0px;
 }
 
-div.wraper {
-	width: 1200px;
-	/*overflow: auto;*/
+button {
+	min-width: 50px;
+}
+
+.myCountainer{
+	max-width: 1200px; 
 	margin: 0px auto;
 }
 
-div.matchData {
-	width: 34%;
-	position: relative;
-	left: 33%;
-	float: left;
-	min-height: 200px;
+.playerNum{
+	width:5%;
 }
 
-div.homeTeam {
-	width: 32%;
-	position: relative;
-	left: -34%;
-	float: left;
-	border: 1px solid #ccc;
-	border-radius: 3px;	
-	min-height: 200px;
-	background: #eee;
+.playerName{
+	width: 45%;
 }
 
-div.awayTeam {
-	width: 32%;
-	float: right;
-	border: 1px solid #ccc;
-	border-radius: 3px;	
-	min-height: 200px;
-	background: #eee;
+.plusCount {
+	width:12.5%;
+	color: #51A351;
 }
 
-@media print, screen and (max-width: 1199px){
-
-	div.wraper {
-		width: 100%;
-	}
-	
-	div.matchData{
-		width: 100%;
-		float: both;
-		position: relative;
-		left: 0;
-	}
-	
-	div.homeTeam {
-		width: 49.5%;
-		position: relative;
-		left: 0;
-	}
-	
-	div.awayTeam {
-		width: 49.5%;
-		/*margin-left: 1%;*/
-	}
+.minusCount {
+	width:12.5%;
+	color: #BD362F;
 }
 
-@media print, screen and (max-width: 679px){
-	div.homeTeam {
-		width: 100%;
-		float: both;
-	}
-	
-	div.awayTeam {
-		margin-top: 5px;
-		width: 100%;
-		float: both;
-		/*margin: 0px;*/
-	}
-
-	div.substitutions {
-		display: none;
-	}
-}
-
-@media print, screen and (max-width: 349px){
-
-	div.wrapper {
-		width: 340px;
-	}
-	
-	div.matchData{
-		width: 340px;
-	}
-
-	div.homeTeam {
-		width: 340px;
-		float: both;
-	}
-	
-	div.awayTeam {
-		width: 340px;
-		float: both;
-	}
+.plus , .minus{
+	width:12.5%;
 }

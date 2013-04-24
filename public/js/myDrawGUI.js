@@ -1,12 +1,16 @@
 var myGUI = (function(){
 	//funkcja wypełniająca zawodnika danymi
-	var drawPlayer = function(data){
-		return '<div class="teamMember" id="' + data.id +'">' +
-						'<span class="playerNum">' + data.number + '</span>' +
-						'<span class="playerName">' + data.name + '</span>' +
-						'<span class="countButton"><span class="plus">' + data.plusCount +' </span></span>' +
-						'<span class="countButton"><span class="minus">' + data.minusCount + '</span></span>' +
-					'</div>';
+	var drawPlayer = function(data, team){
+		return '<tr id="' + data.id +'">' +
+						'<td class="playerNum">' + data.number + '</td>' +
+						'<td class="playerName">' + data.name + '</td>' +
+						'<td class="plus"><button class="btn btn-success">'+
+							'<i class="icon-thumbs-up icon-white"></i></button></td>'+
+						'<td class="plusCount">' + data.plusCount + '</td>' +
+						'<td class="minus"><button class="btn btn-danger">'+
+							'<i class="icon-thumbs-down icon-white"></i></button></td>'+
+						'<td class="minusCount">' + data.minusCount + '</td>' +
+					'</tr>';
 	};
 	//funkcja obsługująca kliknięcie przycisku "minus"
 	var minusClick = function(that){
@@ -28,25 +32,25 @@ var myGUI = (function(){
 	return {
 		drawTeam: function(teamType, data){
 			var Team = data.team;
-			//wypełnianie nazwy drużyny
-			$('.'+ teamType +'Team > .teamName').text(data.name);
-			$('.'+ teamType +'Team .subTitle').text(data.name + ': ławka rezerwowych');
-			//drukowanie zawodników drużyny
-			var FirstTeam = $('#'+ teamType +'FirstTeam');
-			$(FirstTeam).children().remove(); //czyszczenie
-			for(var i=1; i < 12; i++){
-				$(FirstTeam).append(drawPlayer(Team[i]));
-			};
-			//drukowanie rezrwowych drużyny
-			var Substitutions = $('#'+ teamType +'Substitutions');
-			$(Substitutions).children().filter('div').remove(); //czyszczenie
-			for(var i=12; i < 19; i++){
-				$(Substitutions).append(drawPlayer(Team[i]));
-			};
+			$('#teams > #'+teamType).append('<h3 id="'+teamType+'Name">'+data.name+'</h3>');
+			$('#teams > #'+teamType).append('<table id="'+teamType+'FirstTeam" class="table table-striped table-hover table-bordered"></table>');
+			$('#teams > #'+teamType).append('<h5 id="'+teamType+'SubsName">'+data.name+': ławka rezerwowych</h5>');
+			$('#teams > #'+teamType).append('<table id="'+teamType+'Subs" class="table table-striped table-hover table-bordered"></table>');
+
+			var firstTeam = $('#'+teamType+'FirstTeam');
+			for(var i=1; i<12; i++){
+				$(firstTeam).append(drawPlayer(Team[i], teamType));
+			}
+
+			var firstTeam = $('#'+teamType+'Subs');
+			for(var i=12; i<19; i++){
+				$(firstTeam).append(drawPlayer(Team[i], teamType));
+			}
+
 			//obsługa klawisza minus
-			$('.'+ teamType +'Team span.minus').click(function(){ minusClick(this); });
+			$('#'+ teamType +' .minus button').click(function(){ minusClick(this); });
 			//obsługa klawisza plus
-			$('.'+ teamType +'Team span.plus').click(function(){ plusClick(this); });
+			$('#'+ teamType +' .plus button').click(function(){ plusClick(this); });
 		}
 	};
 
