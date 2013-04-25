@@ -18,23 +18,23 @@ body {
 }
 
 .playerNum{
-	width:5%;
+	width:10%;
 }
 
 .playerName{
-	width: 45%;
+	width: 35%;
 }
 
 .plusCount {
-	width:12.5%;
+	width:9%;
 	color: #51A351;
 }
 
 .minusCount {
-	width:12.5%;
+	width:9%;
 	color: #BD362F;
 }
 
 .plus , .minus, .yellow, .red, .goal, .sub{
-	width:12.5%;
+	width:9%;
 }

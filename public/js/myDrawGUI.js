@@ -33,9 +33,11 @@ var myGUI = (function(){
 		drawTeam: function(teamType, data){
 			var Team = data.team;
 			$('#teams > #'+teamType).append('<h3 id="'+teamType+'Name">'+data.name+'</h3>');
-			$('#teams > #'+teamType).append('<table id="'+teamType+'FirstTeam" class="table table-striped table-hover table-bordered"></table>');
+			$('#teams > #'+teamType).append('<table id="'+teamType+'FirstTeam" class="table'+
+				' table-striped table-hover table-bordered"></table>');
 			$('#teams > #'+teamType).append('<h5 id="'+teamType+'SubsName">'+data.name+': ławka rezerwowych</h5>');
-			$('#teams > #'+teamType).append('<table id="'+teamType+'Subs" class="table table-striped table-hover table-bordered"></table>');
+			$('#teams > #'+teamType).append('<table id="'+teamType+'Subs" class="table'+
+				' table-striped table-hover table-bordered"></table>');
 
 			var firstTeam = $('#'+teamType+'FirstTeam');
 			for(var i=1; i<12; i++){
