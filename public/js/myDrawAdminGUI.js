@@ -37,6 +37,7 @@ var myAdminGUI = (function(){
 	return {
 		drawTeam: function(teamType, data){
 			var Team = data.team;
+			$('#teams > #'+teamType).children().remove();
 			$('#teams > #'+teamType).append('<div class="row-fluid">'+
 				'<div class="span12"><h4>'+ (teamType==='home' ? 'Gospodarze' : 'Goście') + ': </h4></div></div>');
 			$('#teams > #'+teamType).append('<div class="row-fluid">'+
