@@ -2,7 +2,7 @@ var myGUI = (function(){
 	//funkcja wypełniająca zawodnika danymi
 	var drawPlayer = function(data, team){
 		return '<tr id="' + data.id +'">' +
-						'<td class="playerNum">' + data.number + '</td>' +
+						'<td class="playerNum">' + (data.number !== '-1' ? data.number : '#') + '</td>' +
 						'<td class="playerName">' + data.name + '</td>' +
 						'<td class="plus"><button class="btn btn-success">'+
 							'<i class="icon-thumbs-up icon-white"></i></button></td>'+
@@ -12,23 +12,7 @@ var myGUI = (function(){
 						'<td class="minusCount">' + data.minusCount + '</td>' +
 					'</tr>';
 	};
-	//funkcja obsługująca kliknięcie przycisku "minus"
-	var minusClick = function(that){
-				var playerId = $(that).parent().parent().attr('id');
-				console.log(playerId);
-				var TeamTypeString = playerId.substring(0,4);
-				var Id = parseInt(playerId.substring(4,6), 10);
-				socket.emit('minusCountUp', { team: TeamTypeString, id: Id });
-	};
-	//funkcja obsługująca kliknięcie przycisku "plus"
-	var plusClick = function(that){
-				var playerId = $(that).parent().parent().attr('id');
-				console.log(playerId);
-				var TeamTypeString = playerId.substring(0,4);
-				var Id = parseInt(playerId.substring(4,6), 10);
-				socket.emit('plusCountUp', { team: TeamTypeString, id: Id });
-	};
-
+	
 	return {
 		drawTeam: function(teamType, data){
 			var Team = data.team;
@@ -49,10 +33,16 @@ var myGUI = (function(){
 				$(firstTeam).append(drawPlayer(Team[i], teamType));
 			}
 
-			//obsługa klawisza minus
-			$('#'+ teamType +' .minus button').click(function(){ minusClick(this); });
-			//obsługa klawisza plus
-			$('#'+ teamType +' .plus button').click(function(){ plusClick(this); });
+			//formatowanie tekstu w td
+			$('td.playerNum').css('text-align','right');
+			$('td.plusCount').css('text-align','center');
+			$('td.minusCount').css('text-align','center');
+			$('td.plus').css('text-align','center');
+			$('td.minus').css('text-align','center');
+
+			//legenda
+			$('#'+teamType +' .plus button').tooltip({trigger: 'hover', title: 'plus'});
+			$('#'+teamType +' .minus button').tooltip({trigger: 'hover', title: 'minus'});
 		}
 	};
 

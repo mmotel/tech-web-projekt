@@ -13,7 +13,7 @@ body {
 }
 
 .myCountainer{
-	max-width: 1200px; 
+	max-width: 1400px; 
 	margin: 0px auto;
 }
 
@@ -22,19 +22,21 @@ body {
 }
 
 .playerName{
-	width: 35%;
+	width: 40%;
 }
 
 .plusCount {
-	width:9%;
+	width:12.5%;
 	color: #51A351;
 }
 
 .minusCount {
-	width:9%;
+	width:12.5%;
 	color: #BD362F;
 }
 
-.plus , .minus, .yellow, .red, .goal, .sub{
-	width:9%;
+.plus , .minus{
+	width:12.5%;
 }
+
+/*.yellow, .red, .goal, .sub*/

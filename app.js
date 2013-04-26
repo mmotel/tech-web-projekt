@@ -14,96 +14,19 @@ app.configure(function () {
 var server = http.createServer(app).listen(app.get('port'), function () {
     console.log("Serwer nasłuchuje na porcie " + app.get('port'));
 });
+
 //moduł przechowujący dane aplikacji
-
-var appData = (function(){
-	
-	var Player = function(Id, Number, Name, Minus, Plus){
-		this.id = Id;
-		this.number = Number;
-		this.name = Name;
-		this.plusCount = Minus;
-		this.minusCount = Plus;
-		return this;
-	};
-	
-	var homeTeam = [];
-	var homeTeamName = 'home team';
-	var awayTeam = [];
-	var awayTeamName = 'away team';
-	
-	for(var i=1; i < 19; i++){
-		var homeNewId = 'home' + (i < 10 ? '0' + i : i);
-		var awayNewId = 'away' + (i < 10 ? '0' + i : i);
-		homeTeam[i] = new Player(homeNewId,i,'player name',0,0);
-		awayTeam[i] = new Player(awayNewId,i,'player name',0,0);
-	};
-
-
-	return {
-		getTeamData: function(team){
-			if(team === 'home'){
-				return { team: homeTeam, name: homeTeamName };
-			}
-			else if(team === 'away'){
-				return { team: awayTeam, name: awayTeamName };
-			}
-			else{
-				return null;
-			}
-		},
-		getMatchData: function(){},
-		minusCountUp: function(team, id){
-			if(team === 'home'){
-				return ++(homeTeam[id].minusCount);
-			}
-			else if(team === 'away'){
-				return ++(awayTeam[id].minusCount);
-			}
-		},
-		plusCountUp: function(team, id){
-			if(team === 'home'){
-				return ++(homeTeam[id].plusCount);
-			}
-			else if(team === 'away'){
-				return ++(awayTeam[id].plusCount);
-			}
-		},
-		getMinusCount: function(team, id){
-		if(team === 'home'){
-				return homeTeam[id].minusCount;
-			}
-			else if(team === 'away'){
-				return awayTeam[id].minusCount;
-			}
-			else{
-				return null;
-			}
-		},
-		getPlusCount: function(team, id){
-			if(team === 'home'){
-				return homeTeam[id].plusCount;
-			}
-			else if(team === 'away'){
-				return awayTeam[id].plusCount;
-			}
-			else{
-				return null;
-			}
-		}
-	};
-})();
+var appData = require('./lib/appData')();
 
 //Socket.io
 var io = require('socket.io');
 var socket = io.listen(server);
 
-
 socket.on('connection', function (client) {
     'use strict';
 
-    client.emit('homeTeamData', appData.getTeamData('home'));
-	client.emit('awayTeamData', appData.getTeamData('away'));
+    client.emit('teamsData', { home: appData.getTeamData('home'), away: appData.getTeamData('away') });
+	//client.emit('awayTeamData', appData.getTeamData('away'));
 
     client.on('minusCountUp', function (data) {
 		var newCount = data;
@@ -119,5 +42,28 @@ socket.on('connection', function (client) {
 			
         client.broadcast.emit('newPlusCount', newCount);
 		client.emit('newPlusCount', newCount);
+    });
+
+    client.on('newData', function (data) {
+		var newData = data;
+		console.log(data);
+		if(data.type === 'teamName'){
+			if(appData.getTeamName(data.team,data.value) !== data.value){
+				appData.setTeamName(data.team,data.value);
+				client.broadcast.emit('setNewData', data);
+			}
+		}
+		if(data.type === 'playerNum'){
+			if(appData.getPlayerNum(data.team,data.id,data.value) !== data.value){
+				appData.setPlayerNum(data.team,data.id,data.value);
+				client.broadcast.emit('setNewData', data);
+			}
+		}
+		if(data.type === 'playerName'){
+			if(appData.getPlayerName(data.team,data.id,data.value) !== data.value){
+				appData.setPlayerName(data.team,data.id,data.value);
+				client.broadcast.emit('setNewData', data);
+			}
+		}
     });
 });
