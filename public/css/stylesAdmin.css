@@ -39,4 +39,12 @@ body {
 	width:12.5%;
 }
 
+.home , .away {
+	width: 45%;
+}
+
+.spacer {
+	width: 10%;
+}
+
 /*.yellow, .red, .goal, .sub*/

@@ -8,6 +8,7 @@
     	<script src='/js/jquery-1.9.1.js'></script>
     	<script src="js/bootstrap.js"></script>
  		<script src="js/bootstrap-tooltip.js"></script>
+ 		<script src="js/bootstrap-modal.js"></script>
 		<script src="js/bootstrap-propver.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src='/js/myDrawAdminGUI.js'></script>
@@ -17,12 +18,62 @@
 	</head>
 	<body>
 		<div class="myCountainer container-fluid">
-			<div class="row-fluid" id="matchData">
-				<div class="span6" id="score">
-				  <h3>match data</h3>
-				</div>
-				<div class="span6" id="facts">
-				  <h3>match facts</h3>
+			<div class="row-fluid " id="matchData">
+				<div class="hero-unit">
+					<div class="span6" id="score">
+					  <table class="table">
+					  	<tr>
+					  		<td class="home">
+					  			<h2 id="time">90</h2><h4 id="halfName">druga połowa</h4>
+					  		</td>
+					  		<td class="spacer"> </td>
+					  		<td class="away">
+					  			<button class="	btn btn-success" id="timeStartBtn">początek</button>
+					  			<button class="	btn btn-danger" id="timeStopBtn">koniec</button>
+					  		</td>
+					  	</tr>
+					  	<tr>
+					  		<td><h5 id="homeTeamMatchDataName">Gospodarze</h5></td>
+					  		<td><h5> </h5></td>
+					  		<td><h5 id="awayTeamMatchDataName">Goście</h5></td>
+					  	</tr>
+					  	<tr>
+					  		<td><h3 id="homeTeamGoals">0</h3></td>
+					  		<td><h3>:</h3></td>
+					  		<td><h3 id="awayTeamGoals">0</h3></td>
+					  	</tr>
+					  	<tr>
+					  		<td>
+					  			<button class="btn btn-inverse" id="homeTeamGoalBtn">gol</button>
+					  			<button class="btn btn-warning" id="homeTeamYellowCardBtn">zółta</button>
+					  			<button class="btn btn-danger" id="homeTeamRedCardBtn">czerwona</button>
+					  		</td>
+					  		<td> </td>
+					  		<td>
+					  			<button class="btn btn-inverse" id="awayTeamGoalBtn">gol</button>
+					  			<button class="btn btn-warning" id="awayTeamYellowCardBtn">zółta</button>
+					  			<button class="btn btn-danger" id="awayTeamRedCardBtn">czerwona</button>
+					  		</td>
+					  	</tr>
+					  </table>
+					</div>
+					<div class="span6" id="facts">
+					  <table class="table" id="factsTable">
+					  	<tr>
+					  		<td class="home">
+					  			<h6>21 min. GOL Mario Balotelli</h6>
+					  		</td>
+					  		<td class="spacer"> </td>
+					  		<td class="away">
+					  		</td>
+					  	</tr>
+					  	<tr>
+					  		<td/>
+					  		<td/>
+					  		<td><h6>78min. GOL Gareth Bale</h6></td>
+					  	</tr>
+					  </table>
+					</div>
 				</div>
 			</div>
 
@@ -33,5 +84,116 @@
 				</div>
 			</div>
 		</div>
+
+
+<!-- GoalModal -->
+<div id="myGoalModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myGoalModalLabel"></h3>
+  </div>
+  <div class="modal-body" id="myGoalModalBody">
+    <table class="table">
+    	<tr>
+    		<td>
+    			<h4 id="homeName1"></h4>
+    		</td>
+    		<td>
+    			<h4 id="awayName1"></h4>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+
+    			<select id="homeTeamList1">
+    				
+    			</select>
+
+    		</td>
+    		<td>
+    			<select id="awayTeamList1">
+
+    			</select>
+    		</td>
+    	</tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Anuluj</button>
+    <button class="btn btn-primary" id="myGoalModalSaveBtn">Zapisz</button>
+  </div>
+</div>
+
+<!-- CardModal -->
+<div id="myCardModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myCardModalLabel"></h3>
+  </div>
+  <div class="modal-body" id="myCardModalBody">
+    <table class="table">
+    	<tr>
+    		<td>
+    			<h4 id="teamName1"></h4>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+
+    			<select id="playersList1">
+    				
+    			</select>
+
+    		</td>
+    	</tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Anuluj</button>
+    <button class="btn btn-primary" id="myGoalModalSaveBtn">Zapisz</button>
+  </div>
+</div>
+
+<!-- SubModal -->
+<div id="mySubModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="mySubModalLabel"></h3>
+  </div>
+  <div class="modal-body" id="mySubModalBody">
+    <table class="table">
+    	<tr>
+    		<td>
+    			<h4>schodzi</h4>
+    		</td>
+    		<td>
+    			<h4>wchodzi</h4>
+    		</td>
+
+    	</tr>
+    	<tr>
+    		<td>
+
+    			<select id="playersList3">
+    				
+    			</select>
+
+    		</td>
+    		<td>
+
+    			<select id="playersList4">
+    				
+    			</select>
+
+    		</td>
+    	</tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Anuluj</button>
+    <button class="btn btn-primary" id="myGoalModalSaveBtn">Zapisz</button>
+  </div>
+</div>
+
 	</body>
 </html>

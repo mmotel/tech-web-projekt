@@ -37,6 +37,7 @@ var myAdminGUI = (function(){
 	return {
 		drawTeam: function(teamType, data){
 			var Team = data.team;
+			$('#'+teamType+'TeamMatchDataName').text(data.name);
 			$('#teams > #'+teamType).children().remove();
 			$('#teams > #'+teamType).append('<div class="row-fluid">'+
 				'<div class="span12"><h4>'+ (teamType==='home' ? 'Gospodarze' : 'Goście') + ': </h4></div></div>');
@@ -44,7 +45,7 @@ var myAdminGUI = (function(){
 				'<div class="span8"><input type="text" class="input-block-level" id="'+teamType+'Name"'+
 					' placeholder="nazwa drużyny"'+
 					'value="'+ (data.name !== 'team name' ? data.name : '') +'"/></div>'+
-				'<div class="span4 sub"><button class="btn btn-info"><i class="icon-arrow-down icon-white"></i>'+
+				'<div class="span4 sub"><button class="btn btn-info" id="'+teamType+'Sub"><i class="icon-arrow-down icon-white"></i>'+
 					'<i class="icon-arrow-up icon-white"></i></button></div>'+
 				'</div>');
 			$('#teams > #'+teamType).append('<table id="'+teamType+'FirstTeam" class="table'+

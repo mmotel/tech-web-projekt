@@ -4,6 +4,8 @@ var socket;
 $(function () {
     'use strict';
 
+    $('#score td').css('text-align', 'center');
+
     //funkcja obsługująca kliknięcie przycisku "minus"
 	var minusClick = function(that){
 				var playerId = $(that).parent().parent().attr('id');
@@ -56,6 +58,7 @@ $(function () {
     	 console.log(data.value + " : " + data.type);
     	if(data.type === 'teamName'){
     		$('#'+data.team+'Name').text(data.value);
+    		$('#'+data.team+'TeamMatchDataName').text(data.value);
     		$('#'+data.team+'SubsName').text(data.value);
     	} else{
     		var id = data.id < 10 ? '0' + data.id : data.id;

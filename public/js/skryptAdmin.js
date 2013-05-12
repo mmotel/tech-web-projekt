@@ -3,6 +3,114 @@
 var socket;
 $(function () {
     'use strict';
+    $('#score td').css('text-align', 'center');
+
+    //obsługa kliknięcia przycisku "gol"
+    var goalBtnClick = function(teamType){
+    	var homeTeamName = $('#homeName').val();
+    	var awayTeamName = $('#awayName').val();
+    	$('#myGoalModalLabel').text('Gol dla ' + (teamType === 'home' ? homeTeamName : awayTeamName));
+    	$('#homeName1').text(homeTeamName + (teamType === 'home' ? '' : ' (samobójczy)'));
+    	$('#awayName1').text(awayTeamName + (teamType === 'away' ? '' : ' (samobójczy)'));
+
+    	//get home team first team
+    	$('#homeTeamList1').children().remove();
+    	$('#homeTeamList1').append('<option value="null">---</option>');
+
+    	var ht = $('#homeFirstTeam tr');
+    	for(var i = 0; i < 11; i++){
+    		var playerNumber = $(ht[i]).children().filter('.playerNum').children().filter('input').val();
+    		var playerName = $(ht[i]).children().filter('.playerName').children().filter('input').val();
+
+    		$('#homeTeamList1').append('<option value="'+ $(ht[i]).attr('id') +'">' + 
+    		 playerNumber + ' ' + playerName + '</option>');
+    	}
+    	//get away team first team
+    	$('#awayTeamList1').children().remove();
+    	$('#awayTeamList1').append('<option value="null">---</option>');
+
+    	var at = $('#awayFirstTeam tr');
+    	for(var i = 0; i < 11; i++){
+    		var playerNumber = $(at[i]).children().filter('.playerNum').children().filter('input').val();
+    		var playerName = $(at[i]).children().filter('.playerName').children().filter('input').val();
+
+    		$('#awayTeamList1').append('<option value="'+ $(ht[i]).attr('id') +'">' + 
+    		 playerNumber + ' ' + playerName + '</option>');
+    	}
+
+
+    	$('#myGoalModal').modal('show');
+    	//TO DO click action for save btn
+    };
+	    //przypisanie akcji
+		$('#homeTeamGoalBtn').click(function(){	 goalBtnClick('home');	});
+		$('#awayTeamGoalBtn').click(function(){	 goalBtnClick('away');	});
+
+	//obsługa kliknięcia przycisku "zółta" i "czerwona"
+	var cardBtnClick = function(teamType, cardName){
+    	var teamName = $('#'+teamType+'Name').val();
+    	$('#myCardModalLabel').text(teamName + ': ' + (cardName === 'yellow' ? 'żółta' : 'czerwona') + ' kartka');
+    	$('#teamName1').text(teamName);
+
+    	//get team first team
+    	$('#playersList1').children().remove();
+    	$('#playersList1').append('<option value="null">---</option>');
+
+    	var ht = $('#'+teamType+'FirstTeam tr');
+    	for(var i = 0; i < 11; i++){
+    		var playerNumber = $(ht[i]).children().filter('.playerNum').children().filter('input').val();
+    		var playerName = $(ht[i]).children().filter('.playerName').children().filter('input').val();
+
+    		$('#playersList1').append('<option value="'+ $(ht[i]).attr('id') +'">' + 
+    		 playerNumber + ' ' + playerName + '</option>');
+    	}
+
+    	$('#myCardModal').modal('show');
+    	//TO DO click action for save btn
+    };
+	    //przypisanie akcji dla "żółta"
+		$('#homeTeamYellowCardBtn').click(function(){		 cardBtnClick('home','yellow');	});
+		$('#awayTeamYellowCardBtn').click(function(){		 cardBtnClick('away','yellow');	});
+		//przypisanie akcji dla "czerwona"
+		$('#homeTeamRedCardBtn').click(function(){		 cardBtnClick('home','red');	});
+		$('#awayTeamRedCardBtn').click(function(){		 cardBtnClick('away','red');	});
+
+	//obsługa kliknięcia "zmiana"
+	var subBtnClick = function(teamType){
+    	var homeTeamName = $('#homeName').val();
+    	var awayTeamName = $('#awayName').val();
+    	$('#mySubModalLabel').text((teamType === 'home' ? homeTeamName : awayTeamName) + ': zmiana');
+
+    	//get team first team
+    	$('#playersList3').children().remove();
+    	$('#playersList3').append('<option value="null">---</option>');
+
+    	var ht = $('#'+teamType+'FirstTeam tr');
+    	for(var i = 0; i < 11; i++){
+    		var playerNumber = $(ht[i]).children().filter('.playerNum').children().filter('input').val();
+    		var playerName = $(ht[i]).children().filter('.playerName').children().filter('input').val();
+
+    		$('#playersList3').append('<option value="'+ $(ht[i]).attr('id') +'">' + 
+    		 playerNumber + ' ' + playerName + '</option>');
+    	}
+    	//get substitutions
+    	$('#playersList4').children().remove();
+    	$('#playersList4').append('<option value="null">---</option>');
+
+    	var ht = $('#'+teamType+'Subs tr');
+    	for(var i = 0; i < 7; i++){
+    		var playerNumber = $(ht[i]).children().filter('.playerNum').children().filter('input').val();
+    		var playerName = $(ht[i]).children().filter('.playerName').children().filter('input').val();
+
+    		$('#playersList4').append('<option value="'+ $(ht[i]).attr('id') +'">' + 
+    		 playerNumber + ' ' + playerName + '</option>');
+    	}
+
+
+    	$('#mySubModal').modal('show');
+    	//TO DO click action for save btn
+    };
+    	
 
     //funkcja obsługująca kliknięcie przycisku "minus"
 	var minusClick = function(that){
@@ -50,13 +158,12 @@ $(function () {
 		//obsługa nowych danych w polach formularza
 		$(' .playerNum input[type="text"]').blur(function(){	inputTextOnBlur(this, 'playerNum'); });
 		$(' .playerName input[type="text"]').blur(function(){ inputTextOnBlur(this, 'playerName'); });
-		$('#homeName').blur(function(){	inputTextOnBlur(this, 'teamName'); });
-		$('#awayName').blur(function(){	inputTextOnBlur(this, 'teamName'); });
+		$('#homeName').blur(function(){	inputTextOnBlur(this, 'teamName'); $('#homeTeamMatchDataName').text($(this).val()); });
+		$('#awayName').blur(function(){	inputTextOnBlur(this, 'teamName'); $('#awayTeamMatchDataName').text($(this).val()); });
+		//obsługa klawisza "zmiana"
+		$('#homeSub').click(function(){	 subBtnClick('home');	});
+		$('#awaySub').click(function(){	 subBtnClick('away');	});
     });
-	
-	// socket.on('awayTeamData', function (data) {
-	// 	myAdminGUI.drawTeam('away', data);
-	// });
 	
 	socket.on('newMinusCount', function (data) {
         var id = data.id < 10 ? '0' + data.id : data.id;

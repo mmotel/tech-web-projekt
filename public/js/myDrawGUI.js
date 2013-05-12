@@ -16,6 +16,7 @@ var myGUI = (function(){
 	return {
 		drawTeam: function(teamType, data){
 			var Team = data.team;
+			$('#'+teamType+'TeamMatchDataName').text(data.name);
 			$('#teams > #'+teamType).children().remove();
 			$('#teams > #'+teamType).append('<h3 id="'+teamType+'Name">'+data.name+'</h3>');
 			$('#teams > #'+teamType).append('<table id="'+teamType+'FirstTeam" class="table'+
