@@ -29,6 +29,7 @@ $(function () {
 
     socket.on('connect', function (data) {
         console.log('Połączony!');
+        $('#factsTable').children().remove();
     });
 	
     socket.on('teamsData', function (data) {
@@ -70,5 +71,20 @@ $(function () {
 				$('#' + selector + ' .playerName').text(data.value);
 			}
     	}
+    });
+
+    socket.on('newGoal', function (data){
+        console.log(data);
+        if(data.team === 'home'){
+            $('#factsTable').append('<tr><td class="home"><h6>'+
+            data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
+            '</h6></td><td class="spacer"> </td><td class="away"></td></tr>');
+        }
+        else{
+            $('#factsTable').append('<tr><td class="home"></td><td class="spacer"></td><td class="away"><h6>'+
+            data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
+            '</h6></td></tr>');
+        }
+
     });
 });

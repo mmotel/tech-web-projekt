@@ -26,7 +26,14 @@ socket.on('connection', function (client) {
     'use strict';
 
     client.emit('teamsData', { home: appData.getTeamData('home'), away: appData.getTeamData('away') });
-	//client.emit('awayTeamData', appData.getTeamData('away'));
+    var facts = appData.getAllFacts();
+	for(var i in facts){
+		facts[i].playerName = appData.getPlayerName(facts[i].playerTeam, facts[i].playerId);
+    	facts[i].playerNum =  appData.getPlayerNum(facts[i].playerTeam, facts[i].playerId);
+    	if(facts[i].ftype === 'goal'){
+			client.emit('newGoal', facts[i]);
+		}
+	}
 
     client.on('minusCountUp', function (data) {
 		var newCount = data;
@@ -66,4 +73,14 @@ socket.on('connection', function (client) {
 			}
 		}
     });
+
+    client.on('newGoal', function (data) {
+    	data.playerName = appData.getPlayerName(data.playerTeam, data.playerId);
+    	data.playerNum =  appData.getPlayerNum(data.playerTeam, data.playerId);
+    	appData.addFact(data,'goal');
+    	console.log(data);
+    	client.broadcast.emit('newGoal', data);
+    	client.emit('newGoal', data);
+
+    })
 });
