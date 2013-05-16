@@ -76,15 +76,62 @@ $(function () {
     socket.on('newGoal', function (data){
         console.log(data);
         if(data.team === 'home'){
-            $('#factsTable').append('<tr><td class="home"><h6>'+
+            $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                +'"><td class="home"><h6>'+
             data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
-            '</h6></td><td class="spacer"> </td><td class="away"></td></tr>');
+            '</h6></td><td class="spacer"> </td></td></tr>');
         }
         else{
-            $('#factsTable').append('<tr><td class="home"></td><td class="spacer"></td><td class="away"><h6>'+
+            $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                +'"><td class="home"></td><td class="away"><h6>'+
             data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
             '</h6></td></tr>');
         }
+    });
 
+    socket.on('newYellow', function (data){
+        console.log(data);
+        if(data.id !== -1){
+            if(data.team === 'home'){
+                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                +'"><td class="home"><h6>'+
+                data.time + 'min. ŻÓŁTA ' + data.playerNum + '. ' + data.playerName +
+                '</h6></td><td class="away"></td></tr>');
+            }
+            else{
+                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                +'"><td class="home"></td><td class="away"><h6>'+
+                data.time + 'min. ŻÓŁTA ' + data.playerNum + '. ' + data.playerName +
+                '</h6></td></tr>');
+            }
+        }
+    });
+
+    socket.on('newRed', function (data){
+        console.log(data);
+        if(data.id !== -1){
+            if(data.team === 'home'){
+                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                +'"><td class="home"><h6>'+
+                data.time + 'min. CZERWONA ' + data.playerNum + '. ' + data.playerName +
+                '</h6></td><td class="away"></td></tr>');
+            }
+            else{
+                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                +'"><td class="home"></td><td class="away"><h6>'+
+                data.time + 'min. CZERWONA ' + data.playerNum + '. ' + data.playerName +
+                '</h6></td></tr>');
+            }
+        }
+    });
+
+    socket.on('rmFact', function (data){
+        //console.log(data);
+        $('#fact'+(data > 10 ? data : '0'+data)).remove();
+    });
+
+    socket.on('newScore', function (data){
+        $('#homeTeamGoals').text(data.home);
+        $('#awayTeamGoals').text(data.away);
     });
 });

@@ -2,9 +2,15 @@
 /*global io: false */
 var socket;
 $(function () {
+
+    var goalTeam = '';
+    var yellowTeam = '';
+    var redTeam = '';
+    var subTeam = '';
+
     'use strict';
     $('#score td').css('text-align', 'center');
-
+    //obsługa przycisku "zapisz" dla gola
     var goalSaveBtnClick = function(){
 
         var homePlayerId = $('#goalList1').val();
@@ -38,7 +44,7 @@ $(function () {
                 $('#myGoalModal').modal('hide');
             }
             //---
-            if($('#myGoalModalLabel').text().substring(8,$('#myGoalModalLabel').text().lenght) === $('#homeName').val()){
+            if(goalTeam === 'home'){
                 goalEventData.team = 'home';
 
             }
@@ -47,87 +53,187 @@ $(function () {
             }
             console.log(goalEventData);
             socket.emit('newGoal', goalEventData);
+            goalTeam = '';
         }
-
     };
 
     //obsługa kliknięcia przycisku "gol"
     var goalBtnClick = function(teamType){
-         $('#goalList1').parent().removeClass('error');
-         $('#goalList2').parent().removeClass('error');
-         $('#goalModalInfo').text('');
+        $('#goalList1').parent().removeClass('error');
+        $('#goalList2').parent().removeClass('error');
+        $('#goalModalInfo').text('');
 
-    	var homeTeamName = $('#homeName').val();
-    	var awayTeamName = $('#awayName').val();
-        if((homeTeamName.length > 0) && (awayTeamName.length > 0) && (homeTeamName !== awayTeamName)){
-        	$('#myGoalModalLabel').text('Gol dla ' + (teamType === 'home' ? homeTeamName : awayTeamName));
-        	$('#homeName1').text(homeTeamName + (teamType === 'home' ? '' : ' (samobójczy)'));
-        	$('#awayName1').text(awayTeamName + (teamType === 'away' ? '' : ' (samobójczy)'));
+    	var homeTeamName = '';
+    	var awayTeamName = '';
 
-        	//get home team first team
+        	//clear home team list
         	$('#goalList1').children().remove();
         	$('#goalList1').append('<option value="null">---</option>');
+            //clear away team list
+            $('#goalList2').children().remove();
+            $('#goalList2').append('<option value="null">---</option>');
 
-        	var ht = $('#homeFirstTeam tr');
-        	for(var i = 0; i < 11; i++){
-        		var playerNumber = $(ht[i]).children().filter('.playerNum').children().filter('input').val();
-        		var playerName = $(ht[i]).children().filter('.playerName').children().filter('input').val();
+            $.getJSON('http://localhost:3000/AJAX/getTeams/', function(data){ //console.log(data); 
+                //set home team data
+                homeTeamName = data.home.name;
+            	var ht = data.home.team;
+            	for(var i = 1; i < 12; i++){
+            		var playerNumber = ht[i].number;
+            		var playerName = ht[i].name;
 
-        		$('#goalList1').append('<option value="'+ $(ht[i]).attr('id') +'">' + 
-        		 playerNumber + ' ' + playerName + '</option>');
-        	}
-        	//get away team first team
-        	$('#goalList2').children().remove();
-        	$('#goalList2').append('<option value="null">---</option>');
+            		$('#goalList1').append('<option value="'+ ht[i].id +'">' + 
+            		 (playerNumber != '100' ? playerNumber : '#') + ' ' + (playerName !== 'player name' ? playerName : 'imię i nazwisko') +
+                      '</option>');
+            	}
+                //set away team data
+                awayTeamName = data.away.name;
+                var at = data.away.team;
+                for(var i = 1; i < 12; i++){
+                    var playerNumber = at[i].number;
+                    var playerName = at[i].name;
 
-        	var at = $('#awayFirstTeam tr');
-        	for(var i = 0; i < 11; i++){
-        		var playerNumber = $(at[i]).children().filter('.playerNum').children().filter('input').val();
-        		var playerName = $(at[i]).children().filter('.playerName').children().filter('input').val();
-
-        		$('#goalList2').append('<option value="'+ $(at[i]).attr('id') +'">' + 
-        		 playerNumber + ' ' + playerName + '</option>');
-        	}
-            //TO DO click action for save btn
-            
-
-        	$('#myGoalModal').modal('show');
-        }
-    	
+                    $('#goalList2').append('<option value="'+ at[i].id +'">' + 
+                     (playerNumber != '100' ? playerNumber : '#') + ' ' + (playerName !== 'player name' ? playerName : 'imię i nazwisko') + 
+                     '</option>');
+                }
+                //show modal
+                 if((homeTeamName.length > 0) && (awayTeamName.length > 0) && (homeTeamName !== awayTeamName)){
+                    $('#myGoalModalLabel').text('Gol dla ' + (teamType === 'home' ? homeTeamName : awayTeamName));
+                    $('#homeName1').text(homeTeamName + (teamType === 'home' ? '' : ' (samobójczy)'));
+                    $('#awayName1').text(awayTeamName + (teamType === 'away' ? '' : ' (samobójczy)'));
+                    $('#myGoalModal').modal('show');
+                }
+            });
     };
+
 	    //przypisanie akcji
-		$('#homeTeamGoalBtn').click(function(){	 goalBtnClick('home');	});
-		$('#awayTeamGoalBtn').click(function(){	 goalBtnClick('away');	});
+		$('#homeTeamGoalBtn').click(function(){	 goalBtnClick('home'); goalTeam = 'home';	});
+		$('#awayTeamGoalBtn').click(function(){	 goalBtnClick('away'); goalTeam = 'away';	});
         $('#myGoalModalSaveBtn').click(function(){ goalSaveBtnClick(); });
 
-	//obsługa kliknięcia przycisku "zółta" i "czerwona"
-	var cardBtnClick = function(teamType, cardName){
-    	var teamName = $('#'+teamType+'Name').val();
-    	$('#myCardModalLabel').text(teamName + ': ' + (cardName === 'yellow' ? 'żółta' : 'czerwona') + ' kartka');
-    	$('#teamName1').text(teamName);
+    //obsługa kliknięcia przycisku "zapisz" dla żółtej
+    var yellowCardSaveBtnClick = function(){
 
-    	//get team first team
-    	$('#cardList').children().remove();
-    	$('#cardList').append('<option value="null">---</option>');
+        var playerId = $('#yellowCardList').val();
+        playerId = playerId.substring(0, playerId.lenght);
+        console.log(playerId === 'null');
 
-    	var ht = $('#'+teamType+'FirstTeam tr');
-    	for(var i = 0; i < 11; i++){
-    		var playerNumber = $(ht[i]).children().filter('.playerNum').children().filter('input').val();
-    		var playerName = $(ht[i]).children().filter('.playerName').children().filter('input').val();
 
-    		$('#cardList').append('<option value="'+ $(ht[i]).attr('id') +'">' + 
-    		 playerNumber + ' ' + playerName + '</option>');
-    	}
+        if(playerId === 'null'){
+            $('#yellowCardList').parent().addClass('error');
+            $('#yellowModalInfo').css('color','#b94a48');
+            $('#yellowModalInfo').text('Wybierz zawodnika przed zapisaniem.');
+        }
+        else{
+            var yellowEventData = {};
 
-    	$('#myCardModal').modal('show');
-    	//TO DO click action for save btn
+                yellowEventData.time = $('#time').text();
+                yellowEventData.playerId = parseInt(playerId.substring(4,6));
+                yellowEventData.playerTeam = yellowTeam;
+                
+                $('#myYellowCardModal').modal('hide');
+
+                yellowEventData.team = yellowTeam;
+            console.log(yellowEventData);
+            socket.emit('newYellow', yellowEventData);
+            yellowTeam = '';
+        }
+    };
+	//obsługa kliknięcia przycisku "zółta"
+	var yellowCardBtnClick = function(teamType){
+        $('#yellowCardList').parent().removeClass('error');
+        $('#yellowModalInfo').text('');
+
+        $.getJSON('http://localhost:3000/AJAX/getPlayers/'+teamType+'/', function(data){
+
+
+        	var teamName = data.name;
+        	$('#myYellowCardModalLabel').text(teamName + ': żółta kartka');
+        	$('#teamName1').text(teamName);
+
+        	//get team first team
+        	$('#yellowCardList').children().remove();
+        	$('#yellowCardList').append('<option value="null">---</option>');
+
+        	var ht = data.team;
+        	for(var i = 1; i < 12; i++){
+        		var playerNumber = ht[i].number;
+        		var playerName = ht[i].name;
+
+        		$('#yellowCardList').append('<option value="'+ ht[i].id +'">' + 
+        		 (playerNumber != '100' ? playerNumber : '#') + ' ' + (playerName !== 'player name' ? playerName : 'imię i nazwisko') +
+                  '</option>');
+        	}
+
+        	$('#myYellowCardModal').modal('show');
+        	//TO DO click action for save btn
+        });
     };
 	    //przypisanie akcji dla "żółta"
-		$('#homeTeamYellowCardBtn').click(function(){		 cardBtnClick('home','yellow');	});
-		$('#awayTeamYellowCardBtn').click(function(){		 cardBtnClick('away','yellow');	});
+		$('#homeTeamYellowCardBtn').click(function(){     yellowCardBtnClick('home','yellow'); yellowTeam = 'home';   });
+		$('#awayTeamYellowCardBtn').click(function(){     yellowCardBtnClick('away','yellow'); yellowTeam = 'away';   });
+        $('#myYellowCardModalSaveBtn').click(function() {   yellowCardSaveBtnClick();   });
+
+
+    //obsługa kliknięcia przycisku "zapisz" dla czerwonej
+    var redCardSaveBtnClick = function(){
+
+        var playerId = $('#redCardList').val();
+        playerId = playerId.substring(0, playerId.lenght);
+        console.log(playerId === 'null');
+
+
+        if(playerId === 'null'){
+            $('#redCardList').parent().addClass('error');
+            $('#redModalInfo').css('color','#b94a48');
+            $('#redModalInfo').text('Wybierz zawodnika przed zapisaniem.');
+        }
+        else{
+            var redEventData = {};
+
+                redEventData.time = $('#time').text();
+                redEventData.playerId = parseInt(playerId.substring(4,6));
+                redEventData.playerTeam = redTeam;
+                
+                $('#myRedCardModal').modal('hide');
+
+                redEventData.team = redTeam;
+            console.log(redEventData);
+            socket.emit('newRed', redEventData);
+            redTeam = '';
+        }
+    };
+    //obsługa kliknięcia przycisku "czerwona"
+    var redCardBtnClick = function(teamType){
+        $.getJSON('http://localhost:3000/AJAX/getPlayers/'+teamType+'/', function(data){
+
+
+            var teamName = data.name;
+            $('#myRedCardModalLabel').text(teamName + ': czerwona kartka');
+            $('#teamName2').text(teamName);
+
+            //get team first team
+            $('#redCardList').children().remove();
+            $('#redCardList').append('<option value="null">---</option>');
+
+            var ht = data.team;
+            for(var i = 1; i < 12; i++){
+                var playerNumber = ht[i].number;
+                var playerName = ht[i].name;
+
+                $('#redCardList').append('<option value="'+ ht[i].id +'">' + 
+                 (playerNumber != '100' ? playerNumber : '#') + ' ' + (playerName !== 'player name' ? playerName : 'imię i nazwisko') +
+                  '</option>');
+            }
+
+            $('#myRedCardModal').modal('show');
+            //TO DO click action for save btn
+        });
+    };
 		//przypisanie akcji dla "czerwona"
-		$('#homeTeamRedCardBtn').click(function(){		 cardBtnClick('home','red');	});
-		$('#awayTeamRedCardBtn').click(function(){		 cardBtnClick('away','red');	});
+		$('#homeTeamRedCardBtn').click(function(){    redCardBtnClick('home','red'); redTeam = 'home';	});
+		$('#awayTeamRedCardBtn').click(function(){    redCardBtnClick('away','red'); redTeam = 'away';	});
+        $('#myRedCardModalSaveBtn').click(function() {   redCardSaveBtnClick();   });
 
 	//obsługa kliknięcia "zmiana"
 	var subBtnClick = function(teamType){
@@ -193,6 +299,15 @@ $(function () {
 			socket.emit('newData', data);
 		}
 	};
+    //fynkcja obsługująca usunięcie faktu
+    var rmFactBtnClick = function(that){
+        var factId = $(that).attr('id').substring(6,9);
+        var id = parseInt(factId,10);
+        // console.log(id + ' : ' + 'fact' + factId);
+        // console.log($('#fact' + factId));
+        socket.emit('rmFact', id);
+
+    };
 
 	//łączenie z serwerem
     socket = io.connect('http://localhost:3000');
@@ -200,6 +315,7 @@ $(function () {
 
     socket.on('connect', function (data) {
         console.log('Połączony!');
+        $('#factsTable').children().remove();
     });
 	
     socket.on('teamsData', function (data) {
@@ -210,7 +326,7 @@ $(function () {
 		//obsługa klawisza plus
 		$(' .plus button').click(function(){ plusClick(this); });
 		//obsługa nowych danych w polach formularza
-		$(' .playerNum input[type="text"]').blur(function(){	inputTextOnBlur(this, 'playerNum'); });
+		$(' .playerNum input[type="text"]').blur(function(){ inputTextOnBlur(this, 'playerNum'); });
 		$(' .playerName input[type="text"]').blur(function(){ inputTextOnBlur(this, 'playerName'); });
 		$('#homeName').blur(function(){	inputTextOnBlur(this, 'teamName'); $('#homeTeamMatchDataName').text($(this).val()); });
 		$('#awayName').blur(function(){	inputTextOnBlur(this, 'teamName'); $('#awayTeamMatchDataName').text($(this).val()); });
@@ -232,18 +348,74 @@ $(function () {
     });
 
     socket.on('newGoal', function (data){
-        console.log(data);
-        if(data.team === 'home'){
-            $('#factsTable').append('<tr><td class="home"><h6>'+
-            data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
-            '</h6></td><td class="spacer"> </td><td class="away"></td></tr>');
-        }
-        else{
-            $('#factsTable').append('<tr><td class="home"></td><td class="spacer"></td><td class="away"><h6>'+
-            data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
-            '</h6></td></tr>');
-        }
+        //console.log(data);
+            if(data.team === 'home'){
+                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                +'"><td class="home"><h6>'+
+                data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
+                '<button type="button" class="close" id="factRm'+(data.id > 10 ? data.id : '0'+data.id)
+                +'">×</button></h6></td><td class="spacer"> </td><td class="away"></td></tr>');
+            }
+            else{
+                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                +'"><td class="home"></td><td class="spacer"></td><td class="away"><h6>'+
+                data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
+                '<button type="button" class="close" id="factRm'+(data.id > 10 ? data.id : '0'+data.id)
+                +'">×</button></h6></td></tr>');
+            }
+            $('#factRm'+(data.id > 10 ? data.id : '0'+data.id)).click(function(){ rmFactBtnClick(this); });
+    });
 
+    socket.on('newYellow', function (data){
+        console.log(data);
+
+            if(data.team === 'home'){
+                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                +'"><td class="home"><h6>'+
+                data.time + 'min. ŻÓŁTA ' + data.playerNum + '. ' + data.playerName +
+                '<button type="button" class="close" id="factRm'+(data.id > 10 ? data.id : '0'+data.id)
+                +'">×</button></h6></td><td class="spacer"> </td><td class="away"></td></tr>');
+            }
+            else{
+                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                +'"><td class="home"></td><td class="spacer"></td><td class="away"><h6>'+
+                data.time + 'min. ŻÓŁTA ' + data.playerNum + '. ' + data.playerName +
+                '<button type="button" class="close" id="factRm'+(data.id > 10 ? data.id : '0'+data.id)
+                +'">×</button></h6></td></tr>');
+            }
+            $('#factRm'+(data.id > 10 ? data.id : '0'+data.id)).click(function(){ rmFactBtnClick(this); });
+        
+    });
+
+    socket.on('newRed', function (data){
+        console.log(data);
+
+            if(data.team === 'home'){
+                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                +'"><td class="home"><h6>'+
+                data.time + 'min. CZERWONA ' + data.playerNum + '. ' + data.playerName +
+                '<button type="button" class="close" id="factRm'+(data.id > 10 ? data.id : '0'+data.id)
+                +'">×</button></h6></td><td class="spacer"> </td><td class="away"></td></tr>');
+            }
+            else{
+                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                +'"><td class="home"></td><td class="spacer"></td><td class="away"><h6>'+
+                data.time + 'min. CZERWONA ' + data.playerNum + '. ' + data.playerName +
+                '<button type="button" class="close" id="factRm'+(data.id > 10 ? data.id : '0'+data.id)
+                +'">×</button></h6></td></tr>');
+            }
+            $('#factRm'+(data.id > 10 ? data.id : '0'+data.id)).click(function(){ rmFactBtnClick(this); });
+        
+    });
+
+    socket.on('rmFact', function (data){
+        //console.log(data);
+        $('#fact'+(data > 10 ? data : '0'+data)).remove();
+    });
+
+    socket.on('newScore', function (data){
+        $('#homeTeamGoals').text(data.home);
+        $('#awayTeamGoals').text(data.away);
     });
 
 });

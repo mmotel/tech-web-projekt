@@ -3,7 +3,7 @@ var myAdminGUI = (function(){
 	var drawPlayer = function(data, team){
 		return '<tr id="' + data.id +'">' +
 						'<td class="playerNum"><input class="input-block-level" type="text" placeholder="#" value="' 
-							+ (data.number !== '-1' ? data.number : '') + '"/></td>' +
+							+ (data.number !== '100' ? data.number : '') + '"/></td>' +
 						'<td class="playerName"><input class="input-block-level" type="text" placeholder="imię i nazwisko" value="'
 						 + (data.name !== 'player name' ? data.name : '') + '"/></td>' +
 						'<td class="plus"><button class="btn btn-success">'+
@@ -15,42 +15,24 @@ var myAdminGUI = (function(){
 					'</tr>';
 	};
 
-	/*var drawSubPlayer = function(data, team){
-		return '<tr id="' + data.id +'">' +
-						'<td class="playerNum"><input class="input-block-level" type="text" placeholder="' 
-							+ data.number + '"/></td>' +
-						'<td class="playerName"><input class="input-block-level" type="text" placeholder="'
-						 + data.name + '"/></td>' +
-						'<td class="yellow"><button class="btn btn-warning">'+
-							'0</button></td>'+
-						'<td class="red"><button class="btn btn-danger">'+
-							'0</button></td>' +
-						'<td class="goal"><button class="btn btn-inverse">'+
-							'0</button></td>'+
-						'<td class="sub"><button class="btn btn-success">'+
-							'<i class="icon-arrow-up icon-white"></i></button></td>' +
-						'<td class="plusCount">'+ data.plusCount +'</td>' +
-						'<td class="minusCount">'+ data.minusCount +'</td>' +
-					'</tr>';
-	};*/
-
 	return {
 		drawTeam: function(teamType, data){
 			var Team = data.team;
-			$('#'+teamType+'TeamMatchDataName').text(data.name);
+			$('#'+teamType+'TeamMatchDataName').text((teamType==='home' ? 'Gospodarze' : 'Goście'));
 			$('#teams > #'+teamType).children().remove();
 			$('#teams > #'+teamType).append('<div class="row-fluid">'+
 				'<div class="span12"><h4>'+ (teamType==='home' ? 'Gospodarze' : 'Goście') + ': </h4></div></div>');
 			$('#teams > #'+teamType).append('<div class="row-fluid">'+
 				'<div class="span8"><input type="text" class="input-block-level" id="'+teamType+'Name"'+
 					' placeholder="nazwa drużyny"'+
-					'value="'+ (data.name !== 'team name' ? data.name : '') +'"/></div>'+
+					'value="'+ (data.name !== teamType+' team name' ? data.name : '') +'"/></div>'+
 				'<div class="span4 sub"><button class="btn btn-info" id="'+teamType+'Sub"><i class="icon-arrow-down icon-white"></i>'+
 					'<i class="icon-arrow-up icon-white"></i></button></div>'+
 				'</div>');
 			$('#teams > #'+teamType).append('<table id="'+teamType+'FirstTeam" class="table'+
 				' table-striped table-hover table-bordered"></table>');
-			$('#teams > #'+teamType).append('<h5 id="'+teamType+'SubsName">ławka rezerwowych</h5>');
+			$('#teams > #'+teamType).append('<h5 id="'+teamType+'SubsName">'+(teamType==='home' ? 'Gospodarze' : 'Goście') +
+				': ławka rezerwowych</h5>');
 			$('#teams > #'+teamType).append('<table id="'+teamType+'Subs" class="table'+
 				' table-striped table-hover table-bordered"></table>');
 
@@ -73,9 +55,6 @@ var myAdminGUI = (function(){
 			//legenda
 			$('#'+teamType +' .plus button').tooltip({trigger: 'hover', title: 'plus'});
 			$('#'+teamType +' .minus button').tooltip({trigger: 'hover', title: 'minus'});
-			/*$('#'+teamType +' .yellow button').tooltip({trigger: 'hover', title: 'żółta kartka'});
-			$('#'+teamType +' .red button').tooltip({trigger: 'hover', title: 'czerwona kartka'});
-			$('#'+teamType +' .goal button').tooltip({trigger: 'hover', title: 'gol'});*/
 			$('#'+teamType +' .sub button').tooltip({trigger: 'hover', title: 'zmiana'});
 		}
 	};

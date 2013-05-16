@@ -38,3 +38,11 @@ body {
 .plus , .minus, .yellow, .red, .goal, .sub{
 	width:12.5%;
 }
+
+.home , .away {
+	width: 45%;
+}
+
+.spacer {
+	width: 10%;
+}

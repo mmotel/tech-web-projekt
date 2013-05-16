@@ -110,7 +110,7 @@
             <td colspan="2">
                 <h4 id="goalModalInfo"></h4>
             </td>
-        </td>
+        </tr>
     </table>
   </div>
   <div class="modal-footer">
@@ -119,13 +119,13 @@
   </div>
 </div>
 
-<!-- CardModal -->
-<div id="myCardModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- YellowCardModal -->
+<div id="myYellowCardModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myCardModalLabel"></h3>
+    <h3 id="myYellowCardModalLabel"></h3>
   </div>
-  <div class="modal-body" id="myCardModalBody">
+  <div class="modal-body" id="myYellowCardModalBody">
     <table class="table">
     	<tr>
     		<td>
@@ -134,18 +134,54 @@
     	</tr>
     	<tr>
     		<td>
-
-    			<select id="cardList">
-    				
-    			</select>
+                <div class="control-group">
+        			<select id="yellowCardList">
+        				
+        			</select>
+                </div>
 
     		</td>
     	</tr>
+        <tr>
+            <td>
+                <h4 id="yellowModalInfo"></h4>
+            </td>
+        </tr>
     </table>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Anuluj</button>
-    <button class="btn btn-primary" id="myGoalModalSaveBtn">Zapisz</button>
+    <button class="btn btn-primary" id="myYellowCardModalSaveBtn">Zapisz</button>
+  </div>
+</div>
+
+<!-- RedCardModal -->
+<div id="myRedCardModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myRedCardModalLabel"></h3>
+  </div>
+  <div class="modal-body" id="myRedCardModalBody">
+    <table class="table">
+        <tr>
+            <td>
+                <h4 id="teamName2"></h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+                <select id="redCardList">
+                    
+                </select>
+
+            </td>
+        </tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Anuluj</button>
+    <button class="btn btn-primary" id="myRedCardModalSaveBtn">Zapisz</button>
   </div>
 </div>
 
