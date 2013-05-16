@@ -10,6 +10,7 @@ $(function () {
 
     'use strict';
     $('#score td').css('text-align', 'center');
+
     //obsługa przycisku "zapisz" dla gola
     var goalSaveBtnClick = function(){
 
@@ -306,8 +307,10 @@ $(function () {
         // console.log(id + ' : ' + 'fact' + factId);
         // console.log($('#fact' + factId));
         socket.emit('rmFact', id);
-
     };
+
+    $('#timeStartBtn').click(function(){ socket.emit('startHalf'); });
+    $('#timeEndBtn').click(function(){ socket.emit('endHalf'); });
 
 	//łączenie z serwerem
     socket = io.connect('http://localhost:3000');
@@ -367,7 +370,7 @@ $(function () {
     });
 
     socket.on('newYellow', function (data){
-        console.log(data);
+        //console.log(data);
 
             if(data.team === 'home'){
                 $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
@@ -388,7 +391,7 @@ $(function () {
     });
 
     socket.on('newRed', function (data){
-        console.log(data);
+        //console.log(data);
 
             if(data.team === 'home'){
                 $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
@@ -416,6 +419,16 @@ $(function () {
     socket.on('newScore', function (data){
         $('#homeTeamGoals').text(data.home);
         $('#awayTeamGoals').text(data.away);
+    });
+
+    socket.on('setTime', function (data){
+        //console.log(data);
+        $('#time').text(data+'\'');
+    });
+
+    socket.on('setHalf', function (data){
+        //console.log(data);
+        $('#halfName').text(data);
     });
 
 });

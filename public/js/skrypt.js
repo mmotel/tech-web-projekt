@@ -134,4 +134,14 @@ $(function () {
         $('#homeTeamGoals').text(data.home);
         $('#awayTeamGoals').text(data.away);
     });
+
+    socket.on('setTime', function (data){
+
+        $('#time').text(data+'\'');
+    });
+
+    socket.on('setHalf', function (data){
+        console.log(data);
+        $('#halfName').text(data);
+    });
 });
