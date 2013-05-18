@@ -144,4 +144,14 @@ $(function () {
         console.log(data);
         $('#halfName').text(data);
     });
+
+    socket.on('makeSub', function(data){
+
+        var p1 = $('#'+data.team+(data.p1 > 10 ? data.p1 : '0'+data.p1));
+        var p2 = $('#'+data.team+(data.p2 > 10 ? data.p2 : '0'+data.p1));
+
+        $(p1).replaceWith(p2);
+
+        $('#'+data.team+'Subs').append(p1);
+    });
 });

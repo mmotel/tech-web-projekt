@@ -28,8 +28,10 @@
 					  		</td>
 					  		<td class="spacer"> </td>
 					  		<td class="away">
-					  			<button class=" btn btn-success" id="timeStartBtn">początek</button>
+                                <button class=" btn btn-success" id="timeStartBtn">start</button>
+					  			<button class=" btn btn-warning" id="timeStopBtn">stop</button>
                                 <button class="btn btn-danger" id="timeEndBtn">koniec</button>
+                                <button class="btn btn-inverse" id="gameEndBtn">koniec meczu</button>
 					  		</td>
 					  	</tr>
 					  	<tr>
@@ -139,7 +141,6 @@
         				
         			</select>
                 </div>
-
     		</td>
     	</tr>
         <tr>
@@ -170,11 +171,16 @@
         </tr>
         <tr>
             <td>
-
-                <select id="redCardList">
-                    
-                </select>
-
+                <div class="control-group">
+                    <select id="redCardList">
+                        
+                    </select>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4 id="redModalInfo"></h4>
             </td>
         </tr>
     </table>
@@ -204,25 +210,31 @@
     	</tr>
     	<tr>
     		<td>
-
-    			<select id="subList1">
-    				
-    			</select>
-
+                <div class="control-group">
+        			<select id="subList1">
+        				
+        			</select>
+                </div>
     		</td>
     		<td>
-
-    			<select id="subList2">
-    				
-    			</select>
+                <div class="control-group">
+        			<select id="subList2">
+        				
+        			</select>
+                </div>
 
     		</td>
     	</tr>
+        <tr>
+            <td colspan="2">
+                <h4 id="subModalInfo"></h4>
+            </td>
+        </tr>
     </table>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Anuluj</button>
-    <button class="btn btn-primary" id="myGoalModalSaveBtn">Zapisz</button>
+    <button class="btn btn-primary" id="mySubModalSaveBtn">Zapisz</button>
   </div>
 </div>
 
