@@ -11,7 +11,7 @@ $(function () {
 
     //kilka poprawek stylistycznych
     $('#score td').css('text-align', 'center');
-    $('button').css('margin','2px');
+    // $('button').css('margin','2px');
 
     //obsługa przycisku "zapisz" dla gola
     var goalSaveBtnClick = function(){
