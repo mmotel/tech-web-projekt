@@ -9,17 +9,17 @@ $(function () {
     //funkcja obsługująca kliknięcie przycisku "minus"
 	var minusClick = function(that){
 				var playerId = $(that).parent().parent().attr('id');
-				console.log(playerId);
+				//console.log(playerId);
 				var TeamTypeString = playerId.substring(0,4);
-				var Id = parseInt(playerId.substring(4,6), 10);
+				var Id = parseInt(playerId.substring(4,playerId.length), 10);
 				socket.emit('minusCountUp', { team: TeamTypeString, id: Id });
 	};
 	//funkcja obsługująca kliknięcie przycisku "plus"
 	var plusClick = function(that){
 				var playerId = $(that).parent().parent().attr('id');
-				console.log(playerId);
+				//console.log(playerId);
 				var TeamTypeString = playerId.substring(0,4);
-				var Id = parseInt(playerId.substring(4,6), 10);
+				var Id = parseInt(playerId.substring(4,playerId.length), 10);
 				socket.emit('plusCountUp', { team: TeamTypeString, id: Id });
 	};
 
@@ -44,25 +44,25 @@ $(function () {
 	});
 	
 	socket.on('newMinusCount', function (data) {
-        var id = data.id < 10 ? '0' + data.id : data.id;
+        var id = data.id;
 		var selector = data.team + id;
 		$('#' + selector + ' .minusCount').text(data.count);
     });
 	
 	socket.on('newPlusCount', function (data) {
-        var id = data.id < 10 ? '0' + data.id : data.id;
+        var id = data.id;
 		var selector = data.team + id;
 		$('#' + selector + '  .plusCount').text(data.count);
     });
 
     socket.on('setNewData', function (data){
-    	 console.log(data.value + " : " + data.type);
+    	 //console.log(data.value + " : " + data.type);
     	if(data.type === 'teamName'){
     		$('#'+data.team+'Name').text(data.value);
     		$('#'+data.team+'TeamMatchDataName').text(data.value);
     		$('#'+data.team+'SubsName').text(data.value);
     	} else{
-    		var id = data.id < 10 ? '0' + data.id : data.id;
+    		var id = data.id;
 			var selector = data.team + id;
 			if(data.type === 'playerNum'){
 				$('#' + selector + ' .playerNum').text(data.value);
@@ -74,15 +74,15 @@ $(function () {
     });
 
     socket.on('newGoal', function (data){
-        console.log(data);
+        //console.log(data);
         if(data.team === 'home'){
-            $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+            $('#factsTable').append('<tr id="fact'+(data.id)
                 +'"><td class="home"><h6>'+
             data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
             '</h6></td><td class="spacer"> </td></td></tr>');
         }
         else{
-            $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+            $('#factsTable').append('<tr id="fact'+(data.id)
                 +'"><td class="home"></td><td class="away"><h6>'+
             data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
             '</h6></td></tr>');
@@ -90,16 +90,16 @@ $(function () {
     });
 
     socket.on('newYellow', function (data){
-        console.log(data);
+        //console.log(data);
         if(data.id !== -1){
             if(data.team === 'home'){
-                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                $('#factsTable').append('<tr id="fact'+(data.id)
                 +'"><td class="home"><h6>'+
                 data.time + 'min. ŻÓŁTA ' + data.playerNum + '. ' + data.playerName +
                 '</h6></td><td class="away"></td></tr>');
             }
             else{
-                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                $('#factsTable').append('<tr id="fact'+(data.id)
                 +'"><td class="home"></td><td class="away"><h6>'+
                 data.time + 'min. ŻÓŁTA ' + data.playerNum + '. ' + data.playerName +
                 '</h6></td></tr>');
@@ -108,16 +108,16 @@ $(function () {
     });
 
     socket.on('newRed', function (data){
-        console.log(data);
+        //console.log(data);
         if(data.id !== -1){
             if(data.team === 'home'){
-                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                $('#factsTable').append('<tr id="fact'+(data.id)
                 +'"><td class="home"><h6>'+
                 data.time + 'min. CZERWONA ' + data.playerNum + '. ' + data.playerName +
                 '</h6></td><td class="away"></td></tr>');
             }
             else{
-                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                $('#factsTable').append('<tr id="fact'+(data.id)
                 +'"><td class="home"></td><td class="away"><h6>'+
                 data.time + 'min. CZERWONA ' + data.playerNum + '. ' + data.playerName +
                 '</h6></td></tr>');
@@ -127,7 +127,7 @@ $(function () {
 
     socket.on('rmFact', function (data){
         //console.log(data);
-        $('#fact'+(data > 10 ? data : '0'+data)).remove();
+        $('#fact'+data).remove();
     });
 
     socket.on('newScore', function (data){
@@ -147,8 +147,8 @@ $(function () {
 
     socket.on('makeSub', function(data){
 
-        var p1 = $('#'+data.team+(data.p1 > 10 ? data.p1 : '0'+data.p1));
-        var p2 = $('#'+data.team+(data.p2 > 10 ? data.p2 : '0'+data.p1));
+        var p1 = $('#'+data.team+data.p1);
+        var p2 = $('#'+data.team+data.p2);
 
         $(p1).replaceWith(p2);
 

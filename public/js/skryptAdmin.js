@@ -18,11 +18,11 @@ $(function () {
 
         var homePlayerId = $('#goalList1').val();
         homePlayerId = homePlayerId.substring(0, homePlayerId.length);
-        console.log(homePlayerId);
+        //console.log(homePlayerId);
 
         var awayPlayerId = $('#goalList2').val();
         awayPlayerId = awayPlayerId.substring(0, awayPlayerId.length);
-        console.log(awayPlayerId);
+        //console.log(awayPlayerId);
 
         if(homePlayerId === 'null' && awayPlayerId === 'null'){
             $('#goalList1').parent().addClass('error');
@@ -34,14 +34,14 @@ $(function () {
             var goalEventData = {};
             if(homePlayerId !== 'null'){
                 goalEventData.time = $('#time').text();
-                goalEventData.playerId = parseInt(homePlayerId.substring(4,6));
+                goalEventData.playerId = parseInt(homePlayerId.substring(4,homePlayerId.length));
                 goalEventData.playerTeam = 'home';
                 
                 $('#myGoalModal').modal('hide');
             }
             else{
                 goalEventData.time = $('#time').text();
-                goalEventData.playerId = parseInt(awayPlayerId.substring(4,6));
+                goalEventData.playerId = parseInt(awayPlayerId.substring(4,homePlayerId.length));
                 goalEventData.playerTeam = 'away';
                 
                 $('#myGoalModal').modal('hide');
@@ -54,7 +54,7 @@ $(function () {
             else{
                 goalEventData.team = 'away';
             }
-            console.log(goalEventData);
+            //console.log(goalEventData);
             socket.emit('newGoal', goalEventData);
             goalTeam = '';
         }
@@ -123,7 +123,7 @@ $(function () {
 
         var playerId = $('#yellowCardList').val();
         playerId = playerId.substring(0, playerId.length);
-        console.log(playerId === 'null');
+        //console.log(playerId === 'null');
 
 
         if(playerId === 'null'){
@@ -135,13 +135,13 @@ $(function () {
             var yellowEventData = {};
 
                 yellowEventData.time = $('#time').text();
-                yellowEventData.playerId = parseInt(playerId.substring(4,6));
+                yellowEventData.playerId = parseInt(playerId.substring(4,playerId.length));
                 yellowEventData.playerTeam = yellowTeam;
                 
                 $('#myYellowCardModal').modal('hide');
 
                 yellowEventData.team = yellowTeam;
-            console.log(yellowEventData);
+            //console.log(yellowEventData);
             socket.emit('newYellow', yellowEventData);
             yellowTeam = '';
         }
@@ -189,7 +189,7 @@ $(function () {
 
         var playerId = $('#redCardList').val();
         playerId = playerId.substring(0, playerId.length);
-        console.log(playerId === 'null');
+        //console.log(playerId === 'null');
 
 
         if(playerId === 'null'){
@@ -201,13 +201,13 @@ $(function () {
             var redEventData = {};
 
                 redEventData.time = $('#time').text();
-                redEventData.playerId = parseInt(playerId.substring(4,6));
+                redEventData.playerId = parseInt(playerId.substring(4,homePlayerId.length));
                 redEventData.playerTeam = redTeam;
                 
                 $('#myRedCardModal').modal('hide');
 
                 redEventData.team = redTeam;
-            console.log(redEventData);
+            //console.log(redEventData);
             socket.emit('newRed', redEventData);
             redTeam = '';
         }
@@ -262,8 +262,8 @@ $(function () {
             $('#subModalInfo').text('Wybierz zawodników przed zapisaniem.');
         }else{
             var subEventData = {};
-            subEventData.p1 = parseInt(playerDownId.substring(4,6),10);
-            subEventData.p2 = parseInt(playerUpId.substring(4,6),10);
+            subEventData.p1 = parseInt(playerDownId.substring(4,playerDownId.length),10);
+            subEventData.p2 = parseInt(playerUpId.substring(4,playerUpId.length),10);
             subEventData.team = subTeam;
             // console.log(subEventData);
             socket.emit('makeSub', subEventData);
@@ -291,7 +291,7 @@ $(function () {
 
             var team = data.team;
             for(var i = 1; i < 12; i++){
-                if(!ht[i].sendOut){
+                if(!team[i].sendOut){
                     var playerNumber = team[i].number;
                     var playerName = team[i].name;
 
@@ -305,7 +305,7 @@ $(function () {
             $('#subList2').append('<option value="null">---</option>');
 
             for(var i = 12; i < 19; i++){
-                if(!ht[i].takenDown){
+                if(!team[i].takenDown){
                     var playerNumber = team[i].number;
                     var playerName = team[i].name;
 
@@ -326,14 +326,14 @@ $(function () {
 	var minusClick = function(that){
 		var playerId = $(that).parent().parent().attr('id');
 		var TeamTypeString = playerId.substring(0,4);
-		var Id = parseInt(playerId.substring(4,6), 10);
+		var Id = parseInt(playerId.substring(4,playerId.length), 10);
 		socket.emit('minusCountUp', { team: TeamTypeString, id: Id });
 	};
 	//funkcja obsługująca kliknięcie przycisku "plus"
 	var plusClick = function(that){
 		var playerId = $(that).parent().parent().attr('id');
 		var TeamTypeString = playerId.substring(0,4);
-		var Id = parseInt(playerId.substring(4,6), 10);
+		var Id = parseInt(playerId.substring(4,playerId.length), 10);
 		socket.emit('plusCountUp', { team: TeamTypeString, id: Id });
 	};
 	//funkcja obsługująca onBlur dla pól input
@@ -341,9 +341,9 @@ $(function () {
 		var playerId = $(that).parent().parent().attr('id');
 		if(!playerId){ playerId = $(that).parent().parent().parent().attr('id'); }
 		var TeamTypeString = playerId.substring(0,4);
-		var Id = parseInt(playerId.substring(4,6), 10);
+		var Id = parseInt(playerId.substring(4,playerId.length), 10);
 		var value = $(that).val();
-		console.log(value.length !== 0);
+		//console.log(value.length !== 0);
 		if(value.length !== 0){
             $('#'+TeamTypeString+'TeamMatchDataName').text($(that).val());
 			var data = { team: TeamTypeString, id: Id, value: value, type: dataType };
@@ -352,8 +352,8 @@ $(function () {
 	};
     //funkcja obsługująca usunięcie faktu
     var rmFactBtnClick = function(that){
-        var factId = $(that).attr('id').substring(6,9);
-        var id = parseInt(factId,10);
+        var factId = $(that).attr('id');
+        var id = parseInt(factId.substring(6,factId.length),10);
         // console.log(id + ' : ' + 'fact' + factId);
         // console.log($('#fact' + factId));
         socket.emit('rmFact', id);
@@ -366,10 +366,10 @@ $(function () {
 
 	//łączenie z serwerem
     socket = io.connect('http://localhost:3000');
-	console.log('connecting…');
+	//console.log('connecting…');
 
     socket.on('connect', function (data) {
-        console.log('Połączony!');
+        //console.log('Połączony!');
         $('#factsTable').children().remove();
     });
 	
@@ -391,13 +391,13 @@ $(function () {
     });
 	
 	socket.on('newMinusCount', function (data) {
-        var id = data.id < 10 ? '0' + data.id : data.id;
+        var id = data.id;
 		var selector = data.team + id;
 		$('#' + selector + ' .minusCount').text(data.count);
     });
 	
 	socket.on('newPlusCount', function (data) {
-        var id = data.id < 10 ? '0' + data.id : data.id;
+        var id = data.id;
 		var selector = data.team + id;
 		$('#' + selector + '  .plusCount').text(data.count);
     });
@@ -405,40 +405,40 @@ $(function () {
     socket.on('newGoal', function (data){
         //console.log(data);
             if(data.team === 'home'){
-                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                $('#factsTable').append('<tr id="fact'+(data.id)
                 +'"><td class="home"><h6>'+
                 data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
-                '<button type="button" class="close" id="factRm'+(data.id > 10 ? data.id : '0'+data.id)
+                '<button type="button" class="close" id="factRm'+(data.id)
                 +'">×</button></h6></td><td class="spacer"> </td><td class="away"></td></tr>');
             }
             else{
-                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                $('#factsTable').append('<tr id="fact'+(data.id)
                 +'"><td class="home"></td><td class="spacer"></td><td class="away"><h6>'+
                 data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
-                '<button type="button" class="close" id="factRm'+(data.id > 10 ? data.id : '0'+data.id)
+                '<button type="button" class="close" id="factRm'+(data.id)
                 +'">×</button></h6></td></tr>');
             }
-            $('#factRm'+(data.id > 10 ? data.id : '0'+data.id)).click(function(){ rmFactBtnClick(this); });
+            $('#factRm'+(data.id)).click(function(){ rmFactBtnClick(this); });
     });
 
     socket.on('newYellow', function (data){
         //console.log(data);
 
             if(data.team === 'home'){
-                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                $('#factsTable').append('<tr id="fact'+(data.id)
                 +'"><td class="home"><h6>'+
                 data.time + 'min. ŻÓŁTA ' + data.playerNum + '. ' + data.playerName +
-                '<button type="button" class="close" id="factRm'+(data.id > 10 ? data.id : '0'+data.id)
+                '<button type="button" class="close" id="factRm'+(data.id)
                 +'">×</button></h6></td><td class="spacer"> </td><td class="away"></td></tr>');
             }
             else{
-                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                $('#factsTable').append('<tr id="fact'+(data.id)
                 +'"><td class="home"></td><td class="spacer"></td><td class="away"><h6>'+
                 data.time + 'min. ŻÓŁTA ' + data.playerNum + '. ' + data.playerName +
-                '<button type="button" class="close" id="factRm'+(data.id > 10 ? data.id : '0'+data.id)
+                '<button type="button" class="close" id="factRm'+(data.id)
                 +'">×</button></h6></td></tr>');
             }
-            $('#factRm'+(data.id > 10 ? data.id : '0'+data.id)).click(function(){ rmFactBtnClick(this); });
+            $('#factRm'+(data.id)).click(function(){ rmFactBtnClick(this); });
         
     });
 
@@ -446,26 +446,26 @@ $(function () {
         //console.log(data);
 
             if(data.team === 'home'){
-                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                $('#factsTable').append('<tr id="fact'+(data.id)
                 +'"><td class="home"><h6>'+
                 data.time + 'min. CZERWONA ' + data.playerNum + '. ' + data.playerName +
-                '<button type="button" class="close" id="factRm'+(data.id > 10 ? data.id : '0'+data.id)
+                '<button type="button" class="close" id="factRm'+(data.id)
                 +'">×</button></h6></td><td class="spacer"> </td><td class="away"></td></tr>');
             }
             else{
-                $('#factsTable').append('<tr id="fact'+(data.id > 10 ? data.id : '0'+data.id)
+                $('#factsTable').append('<tr id="fact'+(data.id)
                 +'"><td class="home"></td><td class="spacer"></td><td class="away"><h6>'+
                 data.time + 'min. CZERWONA ' + data.playerNum + '. ' + data.playerName +
-                '<button type="button" class="close" id="factRm'+(data.id > 10 ? data.id : '0'+data.id)
+                '<button type="button" class="close" id="factRm'+(data.id)
                 +'">×</button></h6></td></tr>');
             }
-            $('#factRm'+(data.id > 10 ? data.id : '0'+data.id)).click(function(){ rmFactBtnClick(this); });
+            $('#factRm'+(data.id)).click(function(){ rmFactBtnClick(this); });
         
     });
 
     socket.on('rmFact', function (data){
         //console.log(data);
-        $('#fact'+(data > 10 ? data : '0'+data)).remove();
+        $('#fact'+(data)).remove();
     });
 
     socket.on('newScore', function (data){
@@ -485,8 +485,8 @@ $(function () {
 
     socket.on('makeSub', function(data){
 
-        var p1 = $('#'+data.team+(data.p1 > 10 ? data.p1 : '0'+data.p1));
-        var p2 = $('#'+data.team+(data.p2 > 10 ? data.p2 : '0'+data.p1));
+        var p1 = $('#'+data.team+(data.p1));
+        var p2 = $('#'+data.team+(data.p2));
 
         $(p1).replaceWith(p2);
 
