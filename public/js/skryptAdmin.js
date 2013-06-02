@@ -33,14 +33,14 @@ $(function () {
         else{
             var goalEventData = {};
             if(homePlayerId !== 'null'){
-                goalEventData.time = $('#time').text();
+                goalEventData.time = $('#myGoalModalTime').text() +'\'';
                 goalEventData.playerId = parseInt(homePlayerId.substring(4,homePlayerId.length));
                 goalEventData.playerTeam = 'home';
                 
                 $('#myGoalModal').modal('hide');
             }
             else{
-                goalEventData.time = $('#time').text();
+                goalEventData.time = $('#myGoalModalTime').text() +'\'';
                 goalEventData.playerId = parseInt(awayPlayerId.substring(4,homePlayerId.length));
                 goalEventData.playerTeam = 'away';
                 
@@ -105,6 +105,10 @@ $(function () {
                 }
                 //show modal
                  if((homeTeamName.length > 0) && (awayTeamName.length > 0) && (homeTeamName !== awayTeamName)){
+                    var time = $('#time').text();
+                    time = parseInt(time.substring(0,time.length-1));
+                    //console.log(time);
+                    $('#myGoalModalTime').text(time);
                     $('#myGoalModalLabel').text('Gol dla ' + (teamType === 'home' ? homeTeamName : awayTeamName));
                     $('#homeName1').text(homeTeamName + (teamType === 'home' ? '' : ' (samobójczy)'));
                     $('#awayName1').text(awayTeamName + (teamType === 'away' ? '' : ' (samobójczy)'));
@@ -117,6 +121,23 @@ $(function () {
 		$('#homeTeamGoalBtn').click(function(){	 goalBtnClick('home'); goalTeam = 'home';	});
 		$('#awayTeamGoalBtn').click(function(){	 goalBtnClick('away'); goalTeam = 'away';	});
         $('#myGoalModalSaveBtn').click(function(){ goalSaveBtnClick(); });
+        $('#myGoalModalTimeDown').click(function() {
+            var goalTime = $('#myGoalModalTime').text();
+            goalTime = parseInt(goalTime);
+            if(goalTime > 1){
+                goalTime -= 1;
+                $('#myGoalModalTime').text(goalTime);
+            }
+        });
+
+        $('#myGoalModalTimeUp').click(function() {
+            var goalTime = $('#myGoalModalTime').text();
+            goalTime = parseInt(goalTime);
+            if(goalTime >= 1){
+                goalTime += 1;
+                $('#myGoalModalTime').text(goalTime);
+            }
+        });
 
     //obsługa kliknięcia przycisku "zapisz" dla żółtej
     var yellowCardSaveBtnClick = function(){
@@ -134,7 +155,7 @@ $(function () {
         else{
             var yellowEventData = {};
 
-                yellowEventData.time = $('#time').text();
+                yellowEventData.time = $('#myYellowCardModalTime').text() +'\'';
                 yellowEventData.playerId = parseInt(playerId.substring(4,playerId.length));
                 yellowEventData.playerTeam = yellowTeam;
                 
@@ -173,15 +194,33 @@ $(function () {
                       '</option>');
                 }
         	}
-
+            var time = $('#time').text();
+            time = parseInt(time.substring(0,time.length-1));
+            $('#myYellowCardModalTime').text(time);
         	$('#myYellowCardModal').modal('show');
-        	//TO DO click action for save btn
         });
     };
 	    //przypisanie akcji dla "żółta"
 		$('#homeTeamYellowCardBtn').click(function(){     yellowCardBtnClick('home','yellow'); yellowTeam = 'home';   });
 		$('#awayTeamYellowCardBtn').click(function(){     yellowCardBtnClick('away','yellow'); yellowTeam = 'away';   });
         $('#myYellowCardModalSaveBtn').click(function() {   yellowCardSaveBtnClick();   });
+        $('#myYellowCardModalTimeDown').click(function() {
+            var yellowTime = $('#myYellowCardModalTime').text();
+            yellowTime = parseInt(yellowTime);
+            if(yellowTime > 1){
+                yellowTime -= 1;
+                $('#myYellowCardModalTime').text(yellowTime);
+            }
+        });
+
+        $('#myYellowCardModalTimeUp').click(function() {
+            var yellowTime = $('#myYellowCardModalTime').text();
+            yellowTime = parseInt(yellowTime);
+            if(yellowTime >= 1){
+                yellowTime += 1;
+                $('#myYellowCardModalTime').text(yellowTime);
+            }
+        });
 
 
     //obsługa kliknięcia przycisku "zapisz" dla czerwonej
@@ -200,8 +239,8 @@ $(function () {
         else{
             var redEventData = {};
 
-                redEventData.time = $('#time').text();
-                redEventData.playerId = parseInt(playerId.substring(4,homePlayerId.length));
+                redEventData.time = $('#myRedCardModalTime').text() + '\'';
+                redEventData.playerId = parseInt(playerId.substring(4,playerId.length));
                 redEventData.playerTeam = redTeam;
                 
                 $('#myRedCardModal').modal('hide');
@@ -236,7 +275,9 @@ $(function () {
                       '</option>');
                 }
             }
-
+            var time = $('#time').text();
+            time = parseInt(time.substring(0,time.length-1));
+            $('#myRedCardModalTime').text(time);
             $('#myRedCardModal').modal('show');
             //TO DO click action for save btn
         });
@@ -245,6 +286,23 @@ $(function () {
 		$('#homeTeamRedCardBtn').click(function(){    redCardBtnClick('home','red'); redTeam = 'home';	});
 		$('#awayTeamRedCardBtn').click(function(){    redCardBtnClick('away','red'); redTeam = 'away';	});
         $('#myRedCardModalSaveBtn').click(function() {   redCardSaveBtnClick();   });
+        $('#myRedCardModalTimeDown').click(function() {
+            var redTime = $('#myRedCardModalTime').text();
+            redTime = parseInt(redTime);
+            if(redTime > 1){
+                redTime -= 1;
+                $('#myRedCardModalTime').text(redTime);
+            }
+        });
+
+        $('#myRedCardModalTimeUp').click(function() {
+            var redTime = $('#myRedCardModalTime').text();
+            redTime = parseInt(redTime);
+            if(redTime >= 1){
+                redTime += 1;
+                $('#myRedCardModalTime').text(redTime);
+            }
+        });
 
     //obsługa kliknięcia przycisku "zapisz" dla zmiany
     var subSaveBtnClick = function(){

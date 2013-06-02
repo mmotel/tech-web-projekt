@@ -84,6 +84,18 @@
   </div>
   <div class="modal-body" id="myGoalModalBody">
     <table class="table">
+        <tr>
+            <td>
+                <h3>Czas: </h3>
+            </td>
+            <td>
+                <div class="form-inline">
+                    <button class="btn btn-link" style="margin-bottom: 10px;" id="myGoalModalTimeDown"><i class="icon-minus"></i></button>
+                    <span class="label"><h3 id="myGoalModalTime" style="display: inline;">0</h3></span>
+                    <button class="btn btn-link" style="margin-bottom: 10px;" id="myGoalModalTimeUp"><i class="icon-plus"></i></button>
+                </div>
+            </td>
+        </tr>
     	<tr>
     		<td>
     			<h4 id="homeName1"></h4>
@@ -129,8 +141,20 @@
   </div>
   <div class="modal-body" id="myYellowCardModalBody">
     <table class="table">
+        <tr>
+            <td>
+                <h3>Czas: </h3>
+            </td>
+            <td>
+                <div class="form-inline">
+                    <button class="btn btn-link" style="margin-bottom: 10px;" id="myYellowCardModalTimeDown"><i class="icon-minus"></i></button>
+                    <span class="label"><h3 id="myYellowCardModalTime" style="display: inline;">0</h3></span>
+                    <button class="btn btn-link" style="margin-bottom: 10px;" id="myYellowCardModalTimeUp"><i class="icon-plus"></i></button>
+                </div>
+            </td>
+        </tr>
     	<tr>
-    		<td>
+    		<td colspan="2">
     			<h4 id="teamName1"></h4>
     		</td>
     	</tr>
@@ -144,7 +168,7 @@
     		</td>
     	</tr>
         <tr>
-            <td>
+            <td colspan="2">
                 <h4 id="yellowModalInfo"></h4>
             </td>
         </tr>
@@ -166,11 +190,23 @@
     <table class="table">
         <tr>
             <td>
+                <h3>Czas: </h3>
+            </td>
+            <td>
+                <div class="form-inline">
+                    <button class="btn btn-link" style="margin-bottom: 10px;" id="myRedCardModalTimeDown"><i class="icon-minus"></i></button>
+                    <span class="label"><h3 id="myRedCardModalTime" style="display: inline;">0</h3></span>
+                    <button class="btn btn-link" style="margin-bottom: 10px;" id="myRedCardModalTimeUp"><i class="icon-plus"></i></button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
                 <h4 id="teamName2"></h4>
             </td>
         </tr>
         <tr>
-            <td>
+            <td colspan="2">
                 <div class="control-group">
                     <select id="redCardList">
                         
@@ -179,7 +215,7 @@
             </td>
         </tr>
         <tr>
-            <td>
+            <td colspan="2">
                 <h4 id="redModalInfo"></h4>
             </td>
         </tr>
