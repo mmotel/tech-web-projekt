@@ -17,10 +17,3 @@ exports.ajaxGetTeams = function (req, res, appData) {
     });
     res.end(JSON.stringify({'home': appData.getTeamData('home'), 'away': appData.getTeamData('away')}));
 };
-
-exports.ajaxGetCurrentTimeAndHalf = function (req, res, timer){
-    res.writeHead(200, {
-        'Content-Type': 'application/json; charset=utf8'
-    });
-    res.end(JSON.stringify({'time': timer.getCurrentTime(), 'half': timer.getCurrentHalf()}));
-}
