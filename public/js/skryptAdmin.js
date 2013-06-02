@@ -438,6 +438,9 @@ $(function () {
 		$(' .minus button').click(function(){ minusClick(this); });
 		//obsługa klawisza plus
 		$(' .plus button').click(function(){ plusClick(this); });
+
+        $('#homeSubs button').css({'display': 'none'});
+        $('#awaySubs button').css({'display': 'none'});
 		//obsługa nowych danych w polach formularza
 		$(' .playerNum input[type="text"]').blur(function(){ inputTextOnBlur(this, 'playerNum'); });
 		$(' .playerName input[type="text"]').blur(function(){ inputTextOnBlur(this, 'playerName'); });
@@ -549,6 +552,11 @@ $(function () {
         $(p1).replaceWith(p2);
 
         $('#'+data.team+'Subs').append(p1);
+
+        $('#homeSubs button').css({'display': 'none'});
+        $('#awaySubs button').css({'display': 'none'});
+        $('#homeFirstTeam button').css({'display': 'block'});
+        $('#awayFirstTeam button').css({'display': 'block'});
     });
 
 });
