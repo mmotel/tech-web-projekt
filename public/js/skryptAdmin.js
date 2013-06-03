@@ -1,7 +1,7 @@
 /*jshint node: true, browser: true, jquery: true */
 /*global io: false */
-var socket;
 $(function () {
+    var socket;
     'use strict';
     //flagi
     var goalTeam = '';
@@ -11,6 +11,7 @@ $(function () {
 
     //kilka poprawek stylistycznych
     $('#score td').css('text-align', 'center');
+
     // $('button').css('margin','2px');
 
     //obsługa przycisku "zapisz" dla gola
@@ -422,6 +423,8 @@ $(function () {
         $('#timeStopBtn').click(function(){ socket.emit('stopHalf'); });
         $('#gameEndBtn').click(function(){ socket.emit('endGame'); });
 
+        $('#newGameBtn').click(function(){ socket.emit('newGame'); });
+
 	//łączenie z serwerem
     socket = io.connect('http://localhost:3000');
 	//console.log('connecting…');
@@ -432,6 +435,8 @@ $(function () {
     });
 	
     socket.on('teamsData', function (data) {
+        $('#newGamePanel').css('display', 'none');
+        $('#timePanel').css('display', 'block');
     	myAdminGUI.drawTeam('home', data.home);
     	myAdminGUI.drawTeam('away', data.away);
     	//obsługa klawisza minus
@@ -542,6 +547,10 @@ $(function () {
     socket.on('setHalf', function (data){
         //console.log(data);
         $('#halfName').text(data);
+        if(data === 'koniec meczu'){
+            $('#timePanel').toggle();
+            $('#newGamePanel').toggle();
+        }
     });
 
     socket.on('makeSub', function(data){

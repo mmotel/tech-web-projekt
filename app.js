@@ -11,6 +11,8 @@ app.configure(function () {
     app.use(express.favicon());
     app.use(express.logger('dev'));
     app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.cookieParser());
+    //app.use(express.session({secret: 'secret', key: 'express.sid'}));
 });
 
 var server = http.createServer(app).listen(app.get('port'), function () {
