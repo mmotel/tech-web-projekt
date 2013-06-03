@@ -19,6 +19,9 @@ var myAdminGUI = (function(){
 		drawTeam: function(teamType, data){
 			var Team = data.team;
 			$('#'+teamType+'TeamMatchDataName').text((teamType==='home' ? 'Gospodarze' : 'Goście'));
+			if(data.name !== 'home team name' && data.name !== 'away team name'){
+				$('#'+teamType+'TeamMatchDataName').text(data.name);
+			}
 			$('#teams  #'+teamType).children().remove();
 			$('#teams  #'+teamType).append('<div class="row-fluid">'+
 				'<div class="span12"><h4>'+ (teamType==='home' ? 'Gospodarze' : 'Goście') + ': </h4></div></div>');

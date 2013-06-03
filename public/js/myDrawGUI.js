@@ -17,6 +17,9 @@ var myGUI = (function(){
 		drawTeam: function(teamType, data){
 			var Team = data.team;
 			$('#'+teamType+'TeamMatchDataName').text((teamType==='home' ? 'Gospodarze' : 'Goście'));
+			if(data.name !== 'home team name' && data.name !== 'away team name'){
+				$('#'+teamType+'TeamMatchDataName').text(data.name);
+			}
 			$('#teams  #'+teamType).children().remove();
 			$('#teams  #'+teamType).append('<h3 id="'+teamType+'Name">'+(teamType==='home' ? 'Gospodarze' : 'Goście') +'</h3>');
 			$('#teams  #'+teamType).append('<table id="'+teamType+'FirstTeam" class="table'+
