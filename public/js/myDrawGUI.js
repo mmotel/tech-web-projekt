@@ -33,9 +33,9 @@ var myGUI = (function(){
 				$(firstTeam).append(drawPlayer(Team[i], teamType));
 			}
 
-			var firstTeam = $('#'+teamType+'Subs');
-			for(var i=12; i<19; i++){
-				$(firstTeam).append(drawPlayer(Team[i], teamType));
+			var subTeam = $('#'+teamType+'Subs');
+			for(var j=12; j<19; j++){
+				$(subTeam).append(drawPlayer(Team[j], teamType));
 			}
 
 			//formatowanie tekstu w td

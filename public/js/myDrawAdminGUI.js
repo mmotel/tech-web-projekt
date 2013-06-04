@@ -2,10 +2,10 @@ var myAdminGUI = (function(){
 	//funkcja wypełniająca zawodnika danymi
 	var drawPlayer = function(data, team){
 		return '<tr id="' + data.id +'">' +
-						'<td class="playerNum"><input class="input-block-level" type="text" placeholder="#" value="' 
-							+ (data.number !== '100' ? data.number : '') + '"/></td>' +
-						'<td class="playerName"><input class="input-block-level" type="text" placeholder="imię i nazwisko" value="'
-						 + (data.name !== 'player name' ? data.name : '') + '"/></td>' +
+						'<td class="playerNum"><input class="input-block-level" type="text" placeholder="#" value="' +
+							(data.number !== '100' ? data.number : '') + '"/></td>' +
+						'<td class="playerName"><input class="input-block-level" type="text" placeholder="imię i nazwisko" value="'+
+							(data.name !== 'player name' ? data.name : '') + '"/></td>' +
 						'<td class="plus"><button class="btn btn-success">'+
 							'<i class="icon-thumbs-up icon-white"></i></button></td>'+
 						'<td class="plusCount">' + data.plusCount + '</td>' +
@@ -44,9 +44,9 @@ var myAdminGUI = (function(){
 				$(firstTeam).append(drawPlayer(Team[i], teamType));
 			}
 
-			var firstTeam = $('#'+teamType+'Subs');
-			for(var i=12; i<19; i++){
-				$(firstTeam).append(drawPlayer(Team[i], teamType));
+			var subTeam = $('#'+teamType+'Subs');
+			for(var j=12; j<19; j++){
+				$(subTeam).append(drawPlayer(Team[j], teamType));
 			}
 
 			//formatowanie tekstu w td
