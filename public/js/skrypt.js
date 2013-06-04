@@ -101,6 +101,9 @@ $(function () {
 				data.time + 'min. ŻÓŁTA ' + data.playerNum + '. ' + data.playerName +
 				'</h6></td></tr>');
 			}
+			if(data.sendOut){
+				$('#'+data.playerTeam+data.playerId + ' button').hide();
+			}
 		}
 	});
 
@@ -117,12 +120,20 @@ $(function () {
 				data.time + 'min. CZERWONA ' + data.playerNum + '. ' + data.playerName +
 				'</h6></td></tr>');
 			}
+			if(data.sendOut){
+				$('#'+data.playerTeam+data.playerId + ' button').hide();
+			}
 		}
 	});
 
 	socket.on('rmFact', function (data){
 		//console.log(data);
-		$('#fact'+data).remove();
+		$('#fact'+data.id).remove();
+		console.log('sendOut: ' + data.sendOut);
+		if(!data.sendOut){
+			console.log('#'+data.playerTeam+data.playerId);
+			$('#'+data.playerTeam+data.playerId + ' button').show();
+		}
 	});
 
 	socket.on('newScore', function (data){
@@ -145,9 +156,16 @@ $(function () {
 		var p1 = $('#'+data.team+data.p1);
 		var p2 = $('#'+data.team+data.p2);
 
+		var p1Id = data.team+data.p1;
+		var p2Id = data.team+data.p2;
+
 		$(p1).replaceWith(p2);
 
 		$('#'+data.team+'Subs').append(p1);
+
+		$('#'+p1Id).attr('id', 'subPlayer');
+		$('#'+p2Id).attr('id', p1Id);
+		$('#subPlayer').attr('id', p2Id);
 
 		if(data.time !== 0){
 			$('#'+data.team+data.p2 + ' .playerSubs').append('<i class="icon-arrow-up"></i>'+data.time +' ');

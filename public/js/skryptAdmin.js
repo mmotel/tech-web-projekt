@@ -558,6 +558,9 @@ $(function () {
 					'">×</button></h6></td></tr>');
 			}
 			$('#factRm'+(data.id)).click(function(){ rmFactBtnClick(this); });
+			if(data.sendOut){
+				$('#'+data.playerTeam+data.playerId + ' button').hide();
+			}
 	});
 
 	socket.on('newRed', function (data){
@@ -578,11 +581,17 @@ $(function () {
 					'">×</button></h6></td></tr>');
 			}
 			$('#factRm'+(data.id)).click(function(){ rmFactBtnClick(this); }); 
+			if(data.sendOut){
+				$('#'+data.playerTeam+data.playerId + ' button').hide();
+			}
 	});
 
 	socket.on('rmFact', function (data){
 		//console.log(data);
-		$('#fact'+(data)).remove();
+		$('#fact'+data.id).remove();
+		if(!data.sendOut){
+			$('#'+data.playerTeam+data.playerId + ' button').show();
+		}
 	});
 
 	socket.on('newScore', function (data){
@@ -609,15 +618,22 @@ $(function () {
 		var p1 = $('#'+data.team+(data.p1));
 		var p2 = $('#'+data.team+(data.p2));
 
+		var p1Id = data.team+data.p1;
+		var p2Id = data.team+data.p2;
+
 		$(p1).replaceWith(p2);
 
 		$('#'+data.team+'Subs').append(p1);
+
+		$('#'+p1Id).attr('id', 'subPlayer');
+		$('#'+p2Id).attr('id', p1Id);
+		$('#subPlayer').attr('id', p2Id);
 
 		if(data.time !== 0){
 			$('#'+data.team+data.p2 + ' .playerSubs').append('<i class="icon-arrow-up"></i>'+data.time +' ');
 			$('#'+data.team+data.p1 + ' .playerSubs').append('<i class="icon-arrow-down"></i>'+data.time +' ');
 		}
-		
+
 		$('#homeSubs button').css({'display': 'none'});
 		$('#awaySubs button').css({'display': 'none'});
 		$('#homeFirstTeam button').css({'display': 'block'});
