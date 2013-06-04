@@ -431,7 +431,12 @@ $(function () {
 		$('#timeStartBtn').click(function(){ socket.emit('startHalf'); });
 		$('#timeEndBtn').click(function(){ socket.emit('endHalf'); });
 		$('#timeStopBtn').click(function(){ socket.emit('stopHalf'); });
-		$('#gameEndBtn').click(function(){ socket.emit('endGame'); });
+		$('#gameEndBtn').click(function(){ $('#myEndMatchModal').modal('show'); });
+
+		$('#myEndMatchModalSaveBtn').click(function() { 
+			socket.emit('endGame');
+			$('#myEndMatchModal').modal('hide');
+		});
 
 		$('#newGameBtn').click(function(){ socket.emit('newGame'); });
 
@@ -440,6 +445,7 @@ $(function () {
 		var passwd = $('#myLoginModalPassword').val();
 		if(passwd.length > 0){
 			socket.emit('checkPassword', {'passwd': passwd});
+			$('#myLoginModalPassword').val('');
 		}
 	});
 
