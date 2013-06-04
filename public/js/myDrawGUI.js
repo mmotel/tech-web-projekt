@@ -4,6 +4,9 @@ var myGUI = (function(){
 		return '<tr id="' + data.id +'">' +
 						'<td class="playerNum">' + (data.number !== '100' ? data.number : '#') + '</td>' +
 						'<td class="playerName">' + (data.name !== 'player name' ? data.name : 'imię i nazwisko') + '</td>' +
+						'<td class="playerSubs">' + (data.takenDown ? '<i class="icon-arrow-down"></i>'+data.takenDownTime+' ' : '') + 
+							(data.takenUpTime !== 0 ? '<i class="icon-arrow-up"></i>'+data.takenUpTime+' ' : '') +
+							'</td>' +
 						'<td class="plus"><button class="btn btn-success">'+
 							'<i class="icon-thumbs-up icon-white"></i></button></td>'+
 						'<td class="plusCount">' + data.plusCount + '</td>' +

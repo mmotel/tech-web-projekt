@@ -22,21 +22,25 @@ body {
 }
 
 .playerName{
-	width: 45%;
+	width: 37%;
+}
+
+.playerSubs{
+	width: 10%;
 }
 
 .plusCount {
-	width:12.5%;
+	width:12%;
 	color: #51A351;
 }
 
 .minusCount {
-	width:12.5%;
+	width:12%;
 	color: #BD362F;
 }
 
-.plus , .minus, .yellow, .red, .goal, .sub{
-	width:12.5%;
+.plus , .minus{
+	width:12%;
 }
 
 .home , .away {

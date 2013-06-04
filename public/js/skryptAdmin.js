@@ -613,6 +613,11 @@ $(function () {
 
 		$('#'+data.team+'Subs').append(p1);
 
+		if(data.time !== 0){
+			$('#'+data.team+data.p2 + ' .playerSubs').append('<i class="icon-arrow-up"></i>'+data.time +' ');
+			$('#'+data.team+data.p1 + ' .playerSubs').append('<i class="icon-arrow-down"></i>'+data.time +' ');
+		}
+		
 		$('#homeSubs button').css({'display': 'none'});
 		$('#awaySubs button').css({'display': 'none'});
 		$('#homeFirstTeam button').css({'display': 'block'});
