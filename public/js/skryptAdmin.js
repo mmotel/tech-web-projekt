@@ -9,6 +9,7 @@ $(function () {
 	var redTeam = '';
 	var subTeam = '';
 
+	$('#panelBody').hide();
 	//kilka poprawek stylistycznych
 	$('#score td').css('text-align', 'center');
 
@@ -434,6 +435,14 @@ $(function () {
 
 		$('#newGameBtn').click(function(){ socket.emit('newGame'); });
 
+	//bosługa potiwerdzenia "logowania"
+	$('#myLoginModalSaveBtn').click(function(){
+		var passwd = $('#myLoginModalPassword').val();
+		if(passwd.length > 0){
+			socket.emit('checkPassword', {'passwd': passwd});
+		}
+	});
+
 	//łączenie z serwerem
 	socket = io.connect('http://localhost:3000');
 	//console.log('connecting…');
@@ -441,6 +450,14 @@ $(function () {
 	socket.on('connect', function (data) {
 		//console.log('Połączony!');
 		$('#factsTable').children().remove();
+		$('#myLoginModal').modal('show');
+	});
+
+	socket.on('checkPassword', function (data){
+		if(data){
+			$('#panelBody').show();
+			$('#myLoginModal').modal('hide');
+		}
 	});
 	
 	socket.on('teamsData', function (data) {
