@@ -85,7 +85,7 @@ $(function () {
 				homeTeamName = data.home.name;
 				var ht = data.home.team;
 				for(var i = 1; i < 12; i++){
-						if(!ht[i].sendOut){
+					if(!ht[i].sendOut){
 						playerNumber = ht[i].number;
 						playerName = ht[i].name;
 
@@ -99,7 +99,7 @@ $(function () {
 				awayTeamName = data.away.name;
 				var at = data.away.team;
 				for(var j = 1; j < 12; j++){
-						if(!ht[j].sendOut){
+					if(!ht[j].sendOut){
 						playerNumber = at[j].number;
 						playerName = at[j].name;
 
@@ -191,7 +191,7 @@ $(function () {
 
 			var ht = data.team;
 			for(var i = 1; i < 12; i++){
-					if(!ht[i].sendOut){
+				if(!ht[i].sendOut){
 					var playerNumber = ht[i].number;
 					var playerName = ht[i].name;
 
@@ -329,6 +329,7 @@ $(function () {
 			subEventData.p1 = parseInt(playerDownId.substring(4,playerDownId.length),10);
 			subEventData.p2 = parseInt(playerUpId.substring(4,playerUpId.length),10);
 			subEventData.team = subTeam;
+			subEventData.time = $('#mySubModalTime').text() + '\'';
 			// console.log(subEventData);
 			socket.emit('makeSub', subEventData);
 			subTeam = '';
@@ -380,13 +381,33 @@ $(function () {
 						'</option>');
 				}
 			}
-
+			var time = $('#time').text();
+			time = parseInt(time.substring(0,time.length-1),10);
+			$('#mySubModalTime').text(time);
 			$('#mySubModal').modal('show');
 			//TO DO click action for save btn
 		});
 	};
 		//przypisanie akcji klawiszowi "zapisz" dla zmiany
 		$('#mySubModalSaveBtn').click(function(){ subSaveBtnClick(); });
+
+		$('#mySubModalTimeDown').click(function() {
+			var subTime = $('#mySubModalTime').text();
+			subTime = parseInt(subTime,10);
+			if(subTime > 1){
+				subTime -= 1;
+				$('#mySubModalTime').text(subTime);
+			}
+		});
+
+		$('#mySubModalTimeUp').click(function() {
+			var subTime = $('#mySubModalTime').text();
+			subTime = parseInt(subTime,10);
+			if(subTime >= 1){
+				subTime += 1;
+				$('#mySubModalTime').text(subTime);
+			}
+		});
 
 	//funkcja obsługująca kliknięcie przycisku "minus"
 	var minusClick = function(that){
