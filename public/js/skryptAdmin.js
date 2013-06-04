@@ -64,6 +64,7 @@ $(function () {
 
 	//obsługa kliknięcia przycisku "gol"
 	var goalBtnClick = function(teamType){
+		if($('#time').text() === '0\'') return;
 		$('#goalList1').parent().removeClass('error');
 		$('#goalList2').parent().removeClass('error');
 		$('#goalModalInfo').text('');
@@ -175,6 +176,7 @@ $(function () {
 	};
 	//obsługa kliknięcia przycisku "zółta"
 	var yellowCardBtnClick = function(teamType){
+		if($('#time').text() === '0\'') return;
 		$('#yellowCardList').parent().removeClass('error');
 		$('#yellowModalInfo').text('');
 
@@ -258,6 +260,7 @@ $(function () {
 	};
 	//obsługa kliknięcia przycisku "czerwona"
 	var redCardBtnClick = function(teamType){
+		if($('#time').text() === '0\'') return;
 		$.getJSON('http://localhost:3000/AJAX/getPlayers/'+teamType+'/', function(data){
 
 
