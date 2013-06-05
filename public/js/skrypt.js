@@ -156,16 +156,16 @@ $(function () {
 		var p1 = $('#'+data.team+data.p1);
 		var p2 = $('#'+data.team+data.p2);
 
-		var p1Id = data.team+data.p1;
-		var p2Id = data.team+data.p2;
+		// var p1Id = data.team+data.p1;
+		// var p2Id = data.team+data.p2;
 
 		$(p1).replaceWith(p2);
 
 		$('#'+data.team+'Subs').append(p1);
 
-		$('#'+p1Id).attr('id', 'subPlayer');
-		$('#'+p2Id).attr('id', p1Id);
-		$('#subPlayer').attr('id', p2Id);
+		// $('#'+p1Id).attr('id', 'subPlayer');
+		// $('#'+p2Id).attr('id', p1Id);
+		// $('#subPlayer').attr('id', p2Id);
 
 		if(data.time !== 0){
 			$('#'+data.team+data.p2 + ' .playerSubs').append('<i class="icon-arrow-up"></i>'+data.time +' ');

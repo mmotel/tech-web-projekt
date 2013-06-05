@@ -43,7 +43,7 @@ $(function () {
 			}
 			else{
 				goalEventData.time = $('#myGoalModalTime').text() +'\'';
-				goalEventData.playerId = parseInt(awayPlayerId.substring(4,homePlayerId.length),10);
+				goalEventData.playerId = parseInt(awayPlayerId.substring(4,awayPlayerId.length),10);
 				goalEventData.playerTeam = 'away';
 				
 				$('#myGoalModal').modal('hide');
@@ -437,7 +437,7 @@ $(function () {
 		var value = $(that).val();
 		//console.log(value.length !== 0);
 		if(value.length !== 0){
-			$('#'+TeamTypeString+'TeamMatchDataName').text($(that).val());
+			if(dataType === 'teamName'){ $('#'+TeamTypeString+'TeamMatchDataName').text($(that).val()); }
 			var data = { team: TeamTypeString, id: Id, value: value, type: dataType };
 			socket.emit('newData', data);
 		}
@@ -491,6 +491,7 @@ $(function () {
 	});
 	
 	socket.on('teamsData', function (data) {
+		//clear facts!!!!!!!!!!!!!!!!!!!!!!!!!!#########@@@@@@@@@@@@@@@@@@@@@<---------------------------
 		$('#newGamePanel').css('display', 'none');
 		$('#timePanel').css('display', 'block');
 		myAdminGUI.drawTeam('home', data.home);
@@ -621,16 +622,16 @@ $(function () {
 		var p1 = $('#'+data.team+(data.p1));
 		var p2 = $('#'+data.team+(data.p2));
 
-		var p1Id = data.team+data.p1;
-		var p2Id = data.team+data.p2;
+		// var p1Id = data.team+data.p1;
+		// var p2Id = data.team+data.p2;
 
 		$(p1).replaceWith(p2);
 
 		$('#'+data.team+'Subs').append(p1);
 
-		$('#'+p1Id).attr('id', 'subPlayer');
-		$('#'+p2Id).attr('id', p1Id);
-		$('#subPlayer').attr('id', p2Id);
+		// $('#'+p1Id).attr('id', 'subPlayer');
+		// $('#'+p2Id).attr('id', p1Id);
+		// $('#subPlayer').attr('id', p2Id);
 
 		if(data.time !== 0){
 			$('#'+data.team+data.p2 + ' .playerSubs').append('<i class="icon-arrow-up"></i>'+data.time +' ');
