@@ -13,6 +13,14 @@ $(function () {
 	//kilka poprawek stylistycznych
 	$('#score td').css('text-align', 'center');
 
+	//obsługa zmiany czasu meczu
+	$('#timeUp').click(function(){
+		socket.emit('timeUp');
+	});
+	$('#timeDown').click(function(){
+		socket.emit('timeDown');
+	});
+
 	// $('button').css('margin','2px');
 
 	//obsługa przycisku "zapisz" dla gola
