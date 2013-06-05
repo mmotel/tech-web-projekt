@@ -51,4 +51,23 @@ body {
 	width: 10%;
 }
 
-/*.yellow, .red, .goal, .sub*/
+.ball {
+	background: url('../img/ball.png');
+	width: 14px;
+	height: 14px;
+	display: inline-block;
+}
+
+.cardYellow {
+	background: url('../img/yellow.png');
+	width: 14px;
+	height: 14px;
+	display: inline-block;
+}
+
+.cardRed {
+	background: url('../img/red.png');
+	width: 14px;
+	height: 14px;
+	display: inline-block;
+}

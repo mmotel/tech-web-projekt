@@ -538,14 +538,14 @@ $(function () {
 			if(data.team === 'home'){
 				$('#factsTable').append('<tr id="fact'+(data.id) +
 					'"><td class="home"><h6>'+
-				data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
+				data.time + 'min. <div class="ball"></div> ' + data.playerNum + '. ' + data.playerName +
 				'<button type="button" class="close" id="factRm'+(data.id) +
 					'">×</button></h6></td><td class="spacer"> </td><td class="away"></td></tr>');
 			}
 			else{
 				$('#factsTable').append('<tr id="fact'+(data.id) +
 					'"><td class="home"></td><td class="spacer"></td><td class="away"><h6>'+
-				data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
+				data.time + 'min. <div class="ball"></div> ' + data.playerNum + '. ' + data.playerName +
 				'<button type="button" class="close" id="factRm'+(data.id) +
 					'">×</button></h6></td></tr>');
 			}
@@ -558,14 +558,14 @@ $(function () {
 			if(data.team === 'home'){
 				$('#factsTable').append('<tr id="fact'+(data.id) + 
 					'"><td class="home"><h6>'+
-				data.time + 'min. ŻÓŁTA ' + data.playerNum + '. ' + data.playerName +
+				data.time + 'min. <div class="cardYellow"></div> ' + data.playerNum + '. ' + data.playerName +
 				'<button type="button" class="close" id="factRm'+(data.id) + 
 					'">×</button></h6></td><td class="spacer"> </td><td class="away"></td></tr>');
 			}
 			else{
 				$('#factsTable').append('<tr id="fact'+(data.id) + 
 					'"><td class="home"></td><td class="spacer"></td><td class="away"><h6>'+
-				data.time + 'min. ŻÓŁTA ' + data.playerNum + '. ' + data.playerName +
+				data.time + 'min. <div class="cardYellow"></div> ' + data.playerNum + '. ' + data.playerName +
 				'<button type="button" class="close" id="factRm'+(data.id) + 
 					'">×</button></h6></td></tr>');
 			}
@@ -581,14 +581,14 @@ $(function () {
 			if(data.team === 'home'){
 				$('#factsTable').append('<tr id="fact'+(data.id) + 
 					'"><td class="home"><h6>'+
-				data.time + 'min. CZERWONA ' + data.playerNum + '. ' + data.playerName +
+				data.time + 'min. <div class="cardRed"></div> ' + data.playerNum + '. ' + data.playerName +
 				'<button type="button" class="close" id="factRm'+(data.id) + 
 					'">×</button></h6></td><td class="spacer"> </td><td class="away"></td></tr>');
 			}
 			else{
 				$('#factsTable').append('<tr id="fact'+(data.id) + 
 					'"><td class="home"></td><td class="spacer"></td><td class="away"><h6>'+
-				data.time + 'min. CZERWONA ' + data.playerNum + '. ' + data.playerName +
+				data.time + 'min. <div class="cardRed"></div> ' + data.playerNum + '. ' + data.playerName +
 				'<button type="button" class="close" id="factRm'+(data.id) + 
 					'">×</button></h6></td></tr>');
 			}

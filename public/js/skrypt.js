@@ -78,12 +78,12 @@ $(function () {
 		//console.log(data);
 		if(data.team === 'home'){
 			$('#factsTable').append('<tr id="fact'+(data.id) +'"><td class="home"><h6>'+
-			data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
+			data.time + 'min. <div class="ball"></div> ' + data.playerNum + '. ' + data.playerName +
 			'</h6></td><td class="spacer"> </td></td></tr>');
 		}
 		else{
 			$('#factsTable').append('<tr id="fact'+(data.id) +'"><td class="home"></td><td class="away"><h6>'+
-			data.time + 'min. GOL ' + data.playerNum + '. ' + data.playerName +
+			data.time + 'min. <div class="ball"></div> ' + data.playerNum + '. ' + data.playerName +
 			'</h6></td></tr>');
 		}
 	});
@@ -93,12 +93,12 @@ $(function () {
 		if(data.id !== -1){
 			if(data.team === 'home'){
 				$('#factsTable').append('<tr id="fact'+(data.id) +'"><td class="home"><h6>'+
-				data.time + 'min. ŻÓŁTA ' + data.playerNum + '. ' + data.playerName +
+				data.time + 'min. <div class="cardYellow"></div> ' + data.playerNum + '. ' + data.playerName +
 				'</h6></td><td class="away"></td></tr>');
 			}
 			else{
 				$('#factsTable').append('<tr id="fact'+(data.id) +'"><td class="home"></td><td class="away"><h6>'+
-				data.time + 'min. ŻÓŁTA ' + data.playerNum + '. ' + data.playerName +
+				data.time + 'min. <div class="cardYellow"></div> ' + data.playerNum + '. ' + data.playerName +
 				'</h6></td></tr>');
 			}
 			if(data.sendOut){
@@ -112,12 +112,12 @@ $(function () {
 		if(data.id !== -1){
 			if(data.team === 'home'){
 				$('#factsTable').append('<tr id="fact'+(data.id) +'"><td class="home"><h6>'+
-				data.time + 'min. CZERWONA ' + data.playerNum + '. ' + data.playerName +
+				data.time + 'min. <div class="cardRed"></div> ' + data.playerNum + '. ' + data.playerName +
 				'</h6></td><td class="away"></td></tr>');
 			}
 			else{
 				$('#factsTable').append('<tr id="fact'+(data.id) +'"><td class="home"></td><td class="away"><h6>'+
-				data.time + 'min. CZERWONA ' + data.playerNum + '. ' + data.playerName +
+				data.time + 'min. <div class="cardRed"></div> ' + data.playerNum + '. ' + data.playerName +
 				'</h6></td></tr>');
 			}
 			if(data.sendOut){

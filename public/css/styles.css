@@ -50,3 +50,24 @@ body {
 .spacer {
 	width: 10%;
 }
+
+.ball {
+	background: url('../img/ball.png');
+	width: 14px;
+	height: 14px;
+	display: inline-block;
+}
+
+.cardYellow {
+	background: url('../img/yellow.png');
+	width: 14px;
+	height: 14px;
+	display: inline-block;
+}
+
+.cardRed {
+	background: url('../img/red.png');
+	width: 14px;
+	height: 14px;
+	display: inline-block;
+}
