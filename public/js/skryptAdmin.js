@@ -648,8 +648,7 @@ $(function () {
 
 		$('#homeSubs button').css({'display': 'none'});
 		$('#awaySubs button').css({'display': 'none'});
-		$('#homeFirstTeam button').css({'display': 'block'});
-		$('#awayFirstTeam button').css({'display': 'block'});
+		$('#'+data.team+data.p2 + ' button').css({'display': 'block'});
 	});
 
 });
